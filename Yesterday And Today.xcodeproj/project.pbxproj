@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		188DC257C7F8EB5147C6A26B /* Pods_Yesterday_And_Today.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97A5746A82F431798235BE87 /* Pods_Yesterday_And_Today.framework */; };
 		2231AE8D1D80CA7F00B35E3A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2231AE8C1D80CA7F00B35E3A /* AppDelegate.swift */; };
 		2231AE8F1D80CA7F00B35E3A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2231AE8E1D80CA7F00B35E3A /* ViewController.swift */; };
 		2231AE921D80CA7F00B35E3A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2231AE901D80CA7F00B35E3A /* Main.storyboard */; };
@@ -16,6 +17,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		184F7E6E98AEFAD256E5D2DB /* Pods-Yesterday And Today.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Yesterday And Today.release.xcconfig"; path = "Pods/Target Support Files/Pods-Yesterday And Today/Pods-Yesterday And Today.release.xcconfig"; sourceTree = "<group>"; };
 		2231AE891D80CA7F00B35E3A /* Yesterday And Today.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Yesterday And Today.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2231AE8C1D80CA7F00B35E3A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2231AE8E1D80CA7F00B35E3A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -24,6 +26,8 @@
 		2231AE961D80CA7F00B35E3A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2231AE981D80CA7F00B35E3A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2231AE9E1D80CB2600B35E3A /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		63C294CD50631F5D776E3718 /* Pods-Yesterday And Today.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Yesterday And Today.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Yesterday And Today/Pods-Yesterday And Today.debug.xcconfig"; sourceTree = "<group>"; };
+		97A5746A82F431798235BE87 /* Pods_Yesterday_And_Today.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Yesterday_And_Today.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,6 +35,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				188DC257C7F8EB5147C6A26B /* Pods_Yesterday_And_Today.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -43,6 +48,8 @@
 				2231AE9E1D80CB2600B35E3A /* .gitignore */,
 				2231AE8B1D80CA7F00B35E3A /* Yesterday And Today */,
 				2231AE8A1D80CA7F00B35E3A /* Products */,
+				E4851CDC113A9647088C61BD /* Pods */,
+				C1103B312951BFC34740E51C /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -67,6 +74,23 @@
 			path = "Yesterday And Today";
 			sourceTree = "<group>";
 		};
+		C1103B312951BFC34740E51C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				97A5746A82F431798235BE87 /* Pods_Yesterday_And_Today.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		E4851CDC113A9647088C61BD /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				63C294CD50631F5D776E3718 /* Pods-Yesterday And Today.debug.xcconfig */,
+				184F7E6E98AEFAD256E5D2DB /* Pods-Yesterday And Today.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -74,9 +98,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2231AE9B1D80CA7F00B35E3A /* Build configuration list for PBXNativeTarget "Yesterday And Today" */;
 			buildPhases = (
+				A44B3B0E310F81C8D837A7FE /* [CP] Check Pods Manifest.lock */,
 				2231AE851D80CA7F00B35E3A /* Sources */,
 				2231AE861D80CA7F00B35E3A /* Frameworks */,
 				2231AE871D80CA7F00B35E3A /* Resources */,
+				E57140EAF9D53E46AC3D8CC3 /* [CP] Embed Pods Frameworks */,
+				84CE0F9996AD9FCCEFBB13F0 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -134,6 +161,54 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		84CE0F9996AD9FCCEFBB13F0 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Yesterday And Today/Pods-Yesterday And Today-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A44B3B0E310F81C8D837A7FE /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		E57140EAF9D53E46AC3D8CC3 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Yesterday And Today/Pods-Yesterday And Today-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		2231AE851D80CA7F00B35E3A /* Sources */ = {
@@ -252,6 +327,7 @@
 		};
 		2231AE9C1D80CA7F00B35E3A /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 63C294CD50631F5D776E3718 /* Pods-Yesterday And Today.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = "Yesterday And Today/Info.plist";
@@ -263,6 +339,7 @@
 		};
 		2231AE9D1D80CA7F00B35E3A /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 184F7E6E98AEFAD256E5D2DB /* Pods-Yesterday And Today.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = "Yesterday And Today/Info.plist";
@@ -291,6 +368,7 @@
 				2231AE9D1D80CA7F00B35E3A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
