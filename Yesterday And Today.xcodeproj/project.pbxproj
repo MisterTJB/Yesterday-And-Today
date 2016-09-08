@@ -9,23 +9,23 @@
 /* Begin PBXBuildFile section */
 		188DC257C7F8EB5147C6A26B /* Pods_Yesterday_And_Today.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97A5746A82F431798235BE87 /* Pods_Yesterday_And_Today.framework */; };
 		2231AE8D1D80CA7F00B35E3A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2231AE8C1D80CA7F00B35E3A /* AppDelegate.swift */; };
-		2231AE8F1D80CA7F00B35E3A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2231AE8E1D80CA7F00B35E3A /* ViewController.swift */; };
 		2231AE921D80CA7F00B35E3A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2231AE901D80CA7F00B35E3A /* Main.storyboard */; };
 		2231AE941D80CA7F00B35E3A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2231AE931D80CA7F00B35E3A /* Assets.xcassets */; };
 		2231AE971D80CA7F00B35E3A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2231AE951D80CA7F00B35E3A /* LaunchScreen.storyboard */; };
 		2231AE9F1D80CB2600B35E3A /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 2231AE9E1D80CB2600B35E3A /* .gitignore */; };
+		22A278861D80E8C8008EF1A8 /* ImageCaptureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22A278851D80E8C8008EF1A8 /* ImageCaptureViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		184F7E6E98AEFAD256E5D2DB /* Pods-Yesterday And Today.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Yesterday And Today.release.xcconfig"; path = "Pods/Target Support Files/Pods-Yesterday And Today/Pods-Yesterday And Today.release.xcconfig"; sourceTree = "<group>"; };
 		2231AE891D80CA7F00B35E3A /* Yesterday And Today.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Yesterday And Today.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2231AE8C1D80CA7F00B35E3A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		2231AE8E1D80CA7F00B35E3A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		2231AE911D80CA7F00B35E3A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		2231AE931D80CA7F00B35E3A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2231AE961D80CA7F00B35E3A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2231AE981D80CA7F00B35E3A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2231AE9E1D80CB2600B35E3A /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		22A278851D80E8C8008EF1A8 /* ImageCaptureViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCaptureViewController.swift; sourceTree = "<group>"; };
 		63C294CD50631F5D776E3718 /* Pods-Yesterday And Today.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Yesterday And Today.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Yesterday And Today/Pods-Yesterday And Today.debug.xcconfig"; sourceTree = "<group>"; };
 		97A5746A82F431798235BE87 /* Pods_Yesterday_And_Today.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Yesterday_And_Today.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -64,14 +64,22 @@
 		2231AE8B1D80CA7F00B35E3A /* Yesterday And Today */ = {
 			isa = PBXGroup;
 			children = (
+				22A278841D80E8A3008EF1A8 /* Controller */,
 				2231AE8C1D80CA7F00B35E3A /* AppDelegate.swift */,
-				2231AE8E1D80CA7F00B35E3A /* ViewController.swift */,
 				2231AE901D80CA7F00B35E3A /* Main.storyboard */,
 				2231AE931D80CA7F00B35E3A /* Assets.xcassets */,
 				2231AE951D80CA7F00B35E3A /* LaunchScreen.storyboard */,
 				2231AE981D80CA7F00B35E3A /* Info.plist */,
 			);
 			path = "Yesterday And Today";
+			sourceTree = "<group>";
+		};
+		22A278841D80E8A3008EF1A8 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				22A278851D80E8C8008EF1A8 /* ImageCaptureViewController.swift */,
+			);
+			name = Controller;
 			sourceTree = "<group>";
 		};
 		C1103B312951BFC34740E51C /* Frameworks */ = {
@@ -215,7 +223,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2231AE8F1D80CA7F00B35E3A /* ViewController.swift in Sources */,
+				22A278861D80E8C8008EF1A8 /* ImageCaptureViewController.swift in Sources */,
 				2231AE8D1D80CA7F00B35E3A /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
