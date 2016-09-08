@@ -205,8 +205,6 @@
                                     </button>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstItem="2PV-NP-3gs" firstAttribute="centerX" secondItem="nUE-nB-ZNb" secondAttribute="centerX" multiplier="1.1" id="3Lx-nu-8Zm"/>
-                                    <constraint firstItem="qII-b7-ZyR" firstAttribute="centerX" secondItem="nUE-nB-ZNb" secondAttribute="centerX" multiplier="0.9" id="9en-sh-Dpa"/>
                                     <constraint firstItem="b54-0H-xFP" firstAttribute="height" secondItem="nUE-nB-ZNb" secondAttribute="height" id="UQB-N8-AnK"/>
                                     <constraint firstItem="b54-0H-xFP" firstAttribute="width" secondItem="nUE-nB-ZNb" secondAttribute="width" id="WeW-Fg-wzq"/>
                                     <constraint firstItem="b54-0H-xFP" firstAttribute="centerY" secondItem="nUE-nB-ZNb" secondAttribute="centerY" id="lyl-hu-9eL"/>
@@ -226,6 +224,8 @@
                             <constraint firstItem="nUE-nB-ZNb" firstAttribute="height" secondItem="yR5-8M-Y2s" secondAttribute="height" id="INm-uK-Gxg"/>
                             <constraint firstItem="yR5-8M-Y2s" firstAttribute="top" secondItem="qII-b7-ZyR" secondAttribute="bottom" constant="9" id="ML7-CZ-iXB"/>
                             <constraint firstItem="yR5-8M-Y2s" firstAttribute="top" secondItem="2PV-NP-3gs" secondAttribute="bottom" constant="9" id="Ole-bW-thM"/>
+                            <constraint firstItem="qII-b7-ZyR" firstAttribute="centerX" secondItem="aav-Gb-3mi" secondAttribute="centerX" multiplier="0.9" id="Qkb-QW-kS3"/>
+                            <constraint firstItem="2PV-NP-3gs" firstAttribute="centerX" secondItem="aav-Gb-3mi" secondAttribute="centerX" multiplier="1.1" id="XXM-31-BgR"/>
                             <constraint firstItem="qOn-fA-ASw" firstAttribute="top" secondItem="yR5-8M-Y2s" secondAttribute="bottom" id="Yc0-LT-syJ"/>
                             <constraint firstItem="yR5-8M-Y2s" firstAttribute="width" secondItem="aav-Gb-3mi" secondAttribute="width" id="qSn-t5-a3K"/>
                             <constraint firstItem="yR5-8M-Y2s" firstAttribute="height" secondItem="aav-Gb-3mi" secondAttribute="height" multiplier="0.5" constant="-10" id="y9g-oH-Mrr"/>
@@ -234,6 +234,7 @@
                     <navigationItem key="navigationItem" id="Ilt-fd-AbC"/>
                     <nil key="simulatedTopBarMetrics"/>
                     <connections>
+                        <outlet property="cameraView" destination="yR5-8M-Y2s" id="6tT-os-2aP"/>
                         <outlet property="pastImage" destination="b54-0H-xFP" id="cjS-9J-uH6"/>
                         <outlet property="scrollView" destination="nUE-nB-ZNb" id="J8c-oe-Q9A"/>
                     </connections>
