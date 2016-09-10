@@ -20,6 +20,7 @@ class FindPhotosViewController: UIViewController, UICollectionViewDataSource, UI
     @IBOutlet var indoorSwitch: UISwitch!
     @IBOutlet var outdoorSwitch: UISwitch!
     @IBOutlet var searchResultsCollection: UICollectionView!
+    @IBOutlet var radiusLabel: UILabel!
     
     var delegate: PassBackImageDelegate?
     
