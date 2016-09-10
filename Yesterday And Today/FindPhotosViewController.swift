@@ -13,7 +13,7 @@ protocol PassBackImageDelegate {
     func displaySelectedImage(data: UIImage)
 }
 
-class FindPhotosViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
+class FindPhotosViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     @IBOutlet var accuracySegment: UISegmentedControl!
     @IBOutlet var radiusSlider: UISlider!
@@ -36,12 +36,16 @@ class FindPhotosViewController: UIViewController, UICollectionViewDataSource, UI
             print ("results changed")
             self!.searchResultsCollection.reloadData()
         }
+        radiusLabel.text = "\(radiusSlider.value) km"
     }
     
     deinit {
         notificationToken?.stop()
     }
     
+    @IBAction func updateRadius(sender: UISlider) {
+        radiusLabel.text = "\(sender.value) km"
+    }
     
     @IBAction func close(sender: UIButton){
         self.dismissViewControllerAnimated(true, completion: nil)
@@ -83,6 +87,10 @@ class FindPhotosViewController: UIViewController, UICollectionViewDataSource, UI
         }
         
         return cell
+    }
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+        return CGSize(width: collectionView.frame.width, height: collectionView.frame.height)
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
