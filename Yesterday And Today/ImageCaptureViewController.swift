@@ -71,8 +71,19 @@ class ImageCaptureViewController: UIViewController, UIImagePickerControllerDeleg
         }
     }
     
+    @IBAction func captureImage(sender: UIButton){
+        if let videoConnection = stillImageOutput.connectionWithMediaType(AVMediaTypeVideo) {
+            stillImageOutput.captureStillImageAsynchronouslyFromConnection(videoConnection) {
+                imageDataSampleBuffer, error in
+                let imageData = AVCaptureStillImageOutput.jpegStillImageNSDataRepresentation(imageDataSampleBuffer)
+                
+            }
+        }
+    }
+    
     func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?) {
         pastImage.image = image
+        print (image.size)
         picker.dismissViewControllerAnimated(true, completion: nil)
     }
     
