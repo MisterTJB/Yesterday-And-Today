@@ -296,7 +296,7 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="contactAdd" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2PV-NP-3gs">
                                         <rect key="frame" x="319" y="259" width="22" height="22"/>
                                         <connections>
-                                            <segue destination="nh7-82-x4T" kind="presentation" id="vET-IR-SHo"/>
+                                            <action selector="segueToImageSearch:" destination="KrT-Gb-a7c" eventType="touchUpInside" id="CxH-ua-jkP"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="contactAdd" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qII-b7-ZyR">

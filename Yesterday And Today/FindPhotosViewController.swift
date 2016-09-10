@@ -9,7 +9,11 @@
 import UIKit
 import RealmSwift
 
-class FindPhotosViewController: UIViewController, UICollectionViewDataSource {
+protocol PassBackImageDelegate {
+    func displaySelectedImage(data: UIImage)
+}
+
+class FindPhotosViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
     
     @IBOutlet var accuracySegment: UISegmentedControl!
     @IBOutlet var radiusSlider: UISlider!
@@ -17,13 +21,15 @@ class FindPhotosViewController: UIViewController, UICollectionViewDataSource {
     @IBOutlet var outdoorSwitch: UISwitch!
     @IBOutlet var searchResultsCollection: UICollectionView!
     
+    var delegate: PassBackImageDelegate?
+    
     var notificationToken: NotificationToken? = nil
     let realm = try! Realm()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         searchResultsCollection.dataSource = self
-        
+        searchResultsCollection.delegate = self
         let results = realm.objects(FlickrPhoto.self)
         notificationToken = results.addNotificationBlock { [weak self] (changes: RealmCollectionChange) in
             print ("results changed")
@@ -76,5 +82,14 @@ class FindPhotosViewController: UIViewController, UICollectionViewDataSource {
         }
         
         return cell
+    }
+    
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        print ("Selected something")
+        if let imageData = realm.objects(FlickrPhoto.self)[indexPath.item].photo {
+            delegate?.displaySelectedImage(UIImage(data: imageData)!)
+        }
+        dismissViewControllerAnimated(true, completion: nil)
+        
     }
 }

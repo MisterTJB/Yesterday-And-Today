@@ -9,7 +9,7 @@
 import UIKit
 import AVFoundation
 
-class ImageCaptureViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIScrollViewDelegate {
+class ImageCaptureViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIScrollViewDelegate, PassBackImageDelegate {
 
     @IBOutlet weak var pastImage: UIImageView!
     @IBOutlet weak var scrollView: UIScrollView!
@@ -81,6 +81,11 @@ class ImageCaptureViewController: UIViewController, UIImagePickerControllerDeleg
         }
     }
     
+    @IBAction func segueToImageSearch(sender: UIButton) {
+        let findPhotosVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("FlickrSearchModal") as! FindPhotosViewController
+        findPhotosVC.delegate = self
+        presentViewController(findPhotosVC, animated: true, completion: nil)
+    }
     func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?) {
         pastImage.image = image
         print (image.size)
@@ -89,6 +94,10 @@ class ImageCaptureViewController: UIViewController, UIImagePickerControllerDeleg
     
     func viewForZoomingInScrollView(scrollView: UIScrollView) -> UIView? {
         return pastImage
+    }
+    
+    func displaySelectedImage(data: UIImage) {
+        pastImage.image = data
     }
     
     
