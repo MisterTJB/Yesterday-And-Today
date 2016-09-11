@@ -34,12 +34,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ikH-hc-L1o">
-                                <rect key="frame" x="85" y="164" width="51" height="31"/>
-                            </switch>
-                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gm5-jU-hHB">
-                                <rect key="frame" x="20" y="164" width="51" height="31"/>
-                            </switch>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Accuracy" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RdJ-TW-r6e">
                                 <rect key="frame" x="20" y="81" width="49" height="14"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="11"/>
@@ -53,21 +47,14 @@
                                     <segment title="City"/>
                                 </segments>
                             </segmentedControl>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pdE-qg-u97">
-                                <rect key="frame" x="336" y="262" width="48" height="30"/>
-                                <state key="normal" title="Search"/>
-                                <connections>
-                                    <action selector="search:" destination="nh7-82-x4T" eventType="touchUpInside" id="QfZ-jj-5wf"/>
-                                </connections>
-                            </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Find Photos Nearby" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fw9-Zf-sbE">
                                 <rect key="frame" x="225" y="20" width="151" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="X1M-tm-iJp">
-                                <rect key="frame" x="215" y="262" width="50" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="X1M-tm-iJp">
+                                <rect key="frame" x="439" y="52" width="50" height="30"/>
                                 <state key="normal" title="Default"/>
                                 <connections>
                                     <action selector="setDefaults:" destination="nh7-82-x4T" eventType="touchUpInside" id="ewO-aa-Ekc"/>
@@ -96,31 +83,25 @@
                                 </cells>
                             </collectionView>
                             <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="5" translatesAutoresizingMaskIntoConstraints="NO" id="am9-EZ-ooH">
-                                <rect key="frame" x="18" y="104" width="118" height="31"/>
+                                <rect key="frame" x="163" y="47" width="118" height="31"/>
                                 <connections>
                                     <action selector="updateRadius:" destination="nh7-82-x4T" eventType="valueChanged" id="DY8-Ip-MeM"/>
                                 </connections>
                             </slider>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Radius" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n52-02-Qgr">
-                                <rect key="frame" x="20" y="142" width="36" height="14"/>
+                                <rect key="frame" x="165" y="80" width="36" height="14"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="n m" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jn4-wb-wXX">
-                                <rect key="frame" x="150" y="99" width="52" height="35"/>
+                                <rect key="frame" x="287" y="47" width="52" height="35"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Indoor" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gax-1w-RPO">
-                                <rect key="frame" x="22" y="203" width="34" height="14"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="11"/>
-                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Outdoor" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fhh-4u-wdW">
-                                <rect key="frame" x="85" y="203" width="44" height="14"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Outdoor only" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fhh-4u-wdW">
+                                <rect key="frame" x="336" y="90" width="69" height="14"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
@@ -132,24 +113,37 @@
                                     <action selector="close:" destination="nh7-82-x4T" eventType="touchUpInside" id="nri-3X-KaU"/>
                                 </connections>
                             </button>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ikH-hc-L1o">
+                                <rect key="frame" x="336" y="51" width="51" height="31"/>
+                            </switch>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="43L-CV-ekn">
+                                <rect key="frame" x="0.0" y="146" width="600" height="153"/>
+                            </mapView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pdE-qg-u97">
+                                <rect key="frame" x="526" y="51" width="48" height="30"/>
+                                <state key="normal" title="Search"/>
+                                <connections>
+                                    <action selector="search:" destination="nh7-82-x4T" eventType="touchUpInside" id="QfZ-jj-5wf"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="43L-CV-ekn" firstAttribute="centerX" secondItem="GWD-vY-yxm" secondAttribute="centerX" id="39N-wc-bNQ"/>
+                            <constraint firstItem="43L-CV-ekn" firstAttribute="width" secondItem="GWD-vY-yxm" secondAttribute="width" id="A4K-QY-b1R"/>
                             <constraint firstItem="JdX-Zi-xyn" firstAttribute="top" secondItem="b6h-tR-3F6" secondAttribute="bottom" id="Ioe-uA-OI5"/>
-                            <constraint firstItem="X1M-tm-iJp" firstAttribute="centerX" secondItem="GWD-vY-yxm" secondAttribute="centerX" multiplier="0.8" id="QMg-Zs-vnM"/>
-                            <constraint firstItem="b6h-tR-3F6" firstAttribute="top" secondItem="pdE-qg-u97" secondAttribute="bottom" constant="8" id="VLW-7c-wul"/>
-                            <constraint firstItem="b6h-tR-3F6" firstAttribute="top" secondItem="X1M-tm-iJp" secondAttribute="bottom" constant="8" id="VVU-KO-fyJ"/>
+                            <constraint firstItem="43L-CV-ekn" firstAttribute="height" secondItem="b6h-tR-3F6" secondAttribute="height" multiplier="0.5" id="YpP-PM-20t"/>
                             <constraint firstItem="Fw9-Zf-sbE" firstAttribute="centerX" secondItem="GWD-vY-yxm" secondAttribute="centerX" id="cze-T8-riW"/>
+                            <constraint firstItem="b6h-tR-3F6" firstAttribute="top" secondItem="43L-CV-ekn" secondAttribute="bottom" constant="1" id="eLZ-PS-Afh"/>
                             <constraint firstItem="b6h-tR-3F6" firstAttribute="centerX" secondItem="GWD-vY-yxm" secondAttribute="centerX" id="rhc-3A-hxH"/>
                             <constraint firstItem="b6h-tR-3F6" firstAttribute="height" secondItem="GWD-vY-yxm" secondAttribute="height" multiplier="0.5" id="smg-jP-IdD"/>
                             <constraint firstItem="b6h-tR-3F6" firstAttribute="width" secondItem="GWD-vY-yxm" secondAttribute="width" id="tlP-wU-Eji"/>
-                            <constraint firstItem="pdE-qg-u97" firstAttribute="centerX" secondItem="GWD-vY-yxm" secondAttribute="centerX" multiplier="1.2" id="yka-Im-SS8"/>
                         </constraints>
                     </view>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
                     <connections>
                         <outlet property="accuracySegment" destination="AXL-L6-bLA" id="mvu-sw-Hqs"/>
-                        <outlet property="indoorSwitch" destination="gm5-jU-hHB" id="Tjf-db-WE7"/>
+                        <outlet property="mapView" destination="43L-CV-ekn" id="rMF-Hp-Amt"/>
                         <outlet property="outdoorSwitch" destination="ikH-hc-L1o" id="VIE-9v-2RL"/>
                         <outlet property="radiusLabel" destination="jn4-wb-wXX" id="EZY-0U-ofZ"/>
                         <outlet property="radiusSlider" destination="am9-EZ-ooH" id="cN0-Zq-4zy"/>

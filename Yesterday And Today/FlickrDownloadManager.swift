@@ -21,6 +21,7 @@ class FlickrDownloadManager: NSObject {
         _parameters["nojsoncallback"] = "1"
         _parameters["extras"] = "url_m,date_taken,geo"
         _parameters["method"] = "flickr.photos.search"
+        _parameters["content_type"] = "6"
         
         
         Alamofire.request(.GET, "https://api.flickr.com/services/rest/", parameters: _parameters, encoding: .URL)
@@ -33,6 +34,7 @@ class FlickrDownloadManager: NSObject {
                     return
                 }
                 
+                print (response.request?.URLString)
                 guard let result = response.result.value as? [String: AnyObject],
                     photos = result["photos"] as? [String: AnyObject],
                     photo = photos["photo"] as? [[String: AnyObject]] else {
@@ -53,8 +55,8 @@ class FlickrDownloadManager: NSObject {
                         let newPhoto = FlickrPhoto()
                         newPhoto.url = url
                         newPhoto.date = date
-                        newPhoto.latitude = Double(latitudeString)
-                        newPhoto.longitude = Double(longitudeString)
+                        newPhoto.latitude.value = Double(latitudeString)
+                        newPhoto.longitude.value = Double(longitudeString)
                         try! realm.write {
                             realm.add(newPhoto)
                         }
@@ -75,6 +77,7 @@ class FlickrDownloadManager: NSObject {
                             
                             try! realm.write {
                                 flickrResult.photo = data!
+                                
                             }
                             
 
