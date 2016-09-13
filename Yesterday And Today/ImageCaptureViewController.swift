@@ -8,6 +8,7 @@
 
 import UIKit
 import AVFoundation
+import RealmSwift
 
 class ImageCaptureViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIScrollViewDelegate, PassBackImageDelegate {
 
@@ -19,9 +20,6 @@ class ImageCaptureViewController: UIViewController, UIImagePickerControllerDeleg
     @IBOutlet weak var shootButton: UIButton!
     let captureSession = AVCaptureSession()
     let stillImageOutput = AVCaptureStillImageOutput()
-    var error: NSError?
-    
-    var previewLayer: AVCaptureVideoPreviewLayer?
     
     
     override func viewDidLoad() {
@@ -32,28 +30,34 @@ class ImageCaptureViewController: UIViewController, UIImagePickerControllerDeleg
         
 
         scrollView.minimumZoomScale = 1.0
-        scrollView.maximumZoomScale = 6.0
+        scrollView.maximumZoomScale = 3.0
         
-        var backCamera = AVCaptureDevice.defaultDeviceWithMediaType(AVMediaTypeVideo)
-        for device in AVCaptureDevice.devices() as! [AVCaptureDevice]{
-            if device.position == AVCaptureDevicePosition.Front {
-                backCamera = device
+        startCamera()
+    }
+    
+    func startCamera(){
+        // Get back camera
+        let devices = AVCaptureDevice.devices().filter {
+            $0.hasMediaType(AVMediaTypeVideo) && $0.position == AVCaptureDevicePosition.Back
+        }
+        if let captureDevice = devices.first as? AVCaptureDevice {
+            
+            do {
+                try captureSession.addInput(AVCaptureDeviceInput(device: captureDevice))
+            } catch {
+                print ("COULDNT ADD DEVICE TO CAPTURE SESSION")
             }
         }
         
-        var error : NSError?
-        var input = try! AVCaptureDeviceInput(device: backCamera)
-
-            
-        captureSession.addInput(input)
         
         stillImageOutput.outputSettings = [AVVideoCodecKey : AVVideoCodecJPEG]
         captureSession.addOutput(stillImageOutput)
+        
         tempImageView.hidden = true
-        previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
+        let previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
         previewLayer?.frame = view.bounds
         previewLayer?.videoGravity = AVLayerVideoGravityResizeAspect
-        previewLayer?.connection.videoOrientation = AVCaptureVideoOrientation.Portrait
+        //previewLayer?.connection.videoOrientation = AVCaptureVideoOrientation.Portrait
         cameraView.layer.addSublayer(previewLayer!)
         captureSession.startRunning()
     }
@@ -67,6 +71,27 @@ class ImageCaptureViewController: UIViewController, UIImagePickerControllerDeleg
         getImageFromImagePicker()
     }
     
+    @IBAction func saveImage(sender: UIButton) {
+        hideOnScreenElements()
+        UIGraphicsBeginImageContextWithOptions(self.view.frame.size, true, 0)
+        view.layer.renderInContext(UIGraphicsGetCurrentContext()!)
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        let realm = try! Realm()
+        try! realm.write {
+            let reshoot = ReshootPhoto()
+            reshoot.photo = UIImageJPEGRepresentation(image, 1.0)
+            realm.add(reshoot)
+        }
+        
+        
+        
+        let imageLibraryViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("ViewImage") as! ViewImageViewController
+        imageLibraryViewController.imageView = UIImageView(image: image)
+        presentViewController(imageLibraryViewController, animated: true, completion: nil)
+    }
+    
     func getImageFromImagePicker(){
         let imagePickerController = UIImagePickerController()
         imagePickerController.delegate = self
@@ -75,25 +100,29 @@ class ImageCaptureViewController: UIViewController, UIImagePickerControllerDeleg
         }
     }
     
+    func hideOnScreenElements(){
+        
+    }
+    
     @IBAction func captureImage(sender: UIButton){
         
-        didPressTakeAnother()
+        didPressTakePhoto()
     }
+    
     
     func didPressTakePhoto(){
         if let videoConnection = stillImageOutput.connectionWithMediaType(AVMediaTypeVideo){
             videoConnection.videoOrientation = AVCaptureVideoOrientation.Portrait
-            stillImageOutput.captureStillImageAsynchronouslyFromConnection(videoConnection, completionHandler: {
-                (sampleBuffer, error) in
+            stillImageOutput.captureStillImageAsynchronouslyFromConnection(videoConnection) { sampleBuffer, error in
                 
                 if sampleBuffer != nil {
                     
                     
-                    var imageData = AVCaptureStillImageOutput.jpegStillImageNSDataRepresentation(sampleBuffer)
-                    var dataProvider  = CGDataProviderCreateWithCFData(imageData)
-                    var cgImageRef = CGImageCreateWithJPEGDataProvider(dataProvider, nil, true, .RenderingIntentDefault)
+                    let imageData = AVCaptureStillImageOutput.jpegStillImageNSDataRepresentation(sampleBuffer)
+                    let dataProvider  = CGDataProviderCreateWithCFData(imageData)
+                    let cgImageRef = CGImageCreateWithJPEGDataProvider(dataProvider, nil, true, .RenderingIntentDefault)
                     
-                    var image = UIImage(CGImage: cgImageRef!, scale: 1.0, orientation: UIImageOrientation.Right)
+                    let image = UIImage(CGImage: cgImageRef!, scale: 1.0, orientation: UIImageOrientation.Right)
                     self.cameraView.hidden = true
                     self.scrollView.alpha = 1.0
                     self.tempImageView.image = image
@@ -102,10 +131,16 @@ class ImageCaptureViewController: UIViewController, UIImagePickerControllerDeleg
                 }
                 
                 
-            })
+            }
         }
     }
     
+    @IBAction func restartCameraSession(sender: UIButton) {
+        self.cameraView.hidden = false
+        self.scrollView.alpha = 0.75
+        self.tempImageView.hidden = true
+        
+    }
     @IBAction func segueToImageSearch(sender: UIButton) {
         let findPhotosVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("FlickrSearchModal") as! FindPhotosViewController
         findPhotosVC.delegate = self
@@ -123,27 +158,6 @@ class ImageCaptureViewController: UIViewController, UIImagePickerControllerDeleg
     
     func displaySelectedImage(data: UIImage) {
         pastImage.image = data
-    }
-    
-    var didTakePhoto = Bool()
-    
-    func didPressTakeAnother(){
-        if didTakePhoto == true{
-            tempImageView.hidden = true
-            didTakePhoto = false
-            
-        }
-        else{
-            captureSession.startRunning()
-            didTakePhoto = true
-            didPressTakePhoto()
-            
-        }
-        
-    }
-    
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        didPressTakeAnother()
     }
     
 }

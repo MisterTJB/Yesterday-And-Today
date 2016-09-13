@@ -15,15 +15,15 @@ protocol PassBackImageDelegate {
     func displaySelectedImage(data: UIImage)
 }
 
-class FindPhotosViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, CLLocationManagerDelegate {
+class FindPhotosViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, CLLocationManagerDelegate, UIPickerViewDataSource, UIPickerViewDelegate {
     
-    @IBOutlet var accuracySegment: UISegmentedControl!
     @IBOutlet var radiusSlider: UISlider!
-    @IBOutlet var indoorSwitch: UISwitch!
-    @IBOutlet var outdoorSwitch: UISwitch!
     @IBOutlet var searchResultsCollection: UICollectionView!
     @IBOutlet var radiusLabel: UILabel!
     @IBOutlet var mapView: MKMapView!
+    
+    
+    @IBOutlet var afterBeforeDate: UIPickerView!
     
     var delegate: PassBackImageDelegate?
     
@@ -33,11 +33,37 @@ class FindPhotosViewController: UIViewController, UICollectionViewDataSource, UI
     let locationManager = CLLocationManager()
     private var userLongitude = 171.612499
     private var userLatitude = -43.500124
+    private var selectedAfterYear = 1825
+    private var selectedBeforeYear = 1825
+    
+    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return (2016 - 1825)
+    }
+    
+    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
+        return 2
+    }
+    
+    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return String(1825 + row)
+    }
+    
+    func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        if component == 0 {
+            selectedAfterYear = 1825 + row
+        } else if component == 1 {
+            selectedBeforeYear = 1825 + row
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         searchResultsCollection.dataSource = self
         searchResultsCollection.delegate = self
+        
+        afterBeforeDate.dataSource = self
+        afterBeforeDate.delegate = self
         
         self.locationManager.requestWhenInUseAuthorization()
         
@@ -78,7 +104,7 @@ class FindPhotosViewController: UIViewController, UICollectionViewDataSource, UI
         radiusLabel.text = "\(sender.value) km"
     }
     
-    @IBAction func close(sender: UIButton){
+    @IBAction func close(sender: AnyObject){
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
@@ -93,27 +119,39 @@ class FindPhotosViewController: UIViewController, UICollectionViewDataSource, UI
     }
     
     
-    @IBAction func search(sender: UIButton){
+    @IBAction func search(sender: AnyObject){
         print ("Hit search")
         try! realm.write {
             realm.deleteAll()
         }
+        
+        
+        let gregorianCalendar = NSCalendar(calendarIdentifier: NSGregorianCalendar)
+        
+        
+        let afterDateComponents = NSDateComponents()
+        afterDateComponents.day = 1
+        afterDateComponents.month = 1
+        afterDateComponents.year = selectedAfterYear
+        
+        let beforeDateComponents = NSDateComponents()
+        beforeDateComponents.day = 31
+        beforeDateComponents.month = 12
+        beforeDateComponents.year = selectedBeforeYear
+        
+        let afterDate = gregorianCalendar?.dateFromComponents(afterDateComponents)
+        let beforeDate = gregorianCalendar?.dateFromComponents(beforeDateComponents)
+        
+        
         let parameters = [
             "lon": String(userLongitude),
             "lat": String(userLatitude),
-            "accuracy": accuracySegment.selectedSegmentIndex == 0 ? "16" : "11",
-            "geo_context": outdoorSwitch.on ? "2" : "0",
-            "radius": String(radiusSlider.value)
+            "radius": String(radiusSlider.value),
+            "min_taken_date": String(Int(afterDate!.timeIntervalSince1970)),
+            "max_taken_date": String(Int(beforeDate!.timeIntervalSince1970))
+            
         ]
         FlickrDownloadManager.downloadImagesFromFlickrWithParametersAndPersist(parameters)
-    }
-
-    @IBAction func setDefaults(sender: UIButton) {
-        accuracySegment.selectedSegmentIndex = 0
-        radiusSlider.setValue(0.5, animated: true)
-        indoorSwitch.setOn(true, animated: true)
-        outdoorSwitch.setOn(true, animated: true)
-    
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

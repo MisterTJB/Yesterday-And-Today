@@ -14,6 +14,9 @@
 		2231AE971D80CA7F00B35E3A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2231AE951D80CA7F00B35E3A /* LaunchScreen.storyboard */; };
 		2231AE9F1D80CB2600B35E3A /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 2231AE9E1D80CB2600B35E3A /* .gitignore */; };
 		22A278861D80E8C8008EF1A8 /* ImageCaptureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22A278851D80E8C8008EF1A8 /* ImageCaptureViewController.swift */; };
+		22D84F471D877FEE000CE691 /* ReshootPhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D84F461D877FEE000CE691 /* ReshootPhoto.swift */; };
+		22D84F491D8780D0000CE691 /* ReshootLibraryCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D84F481D8780D0000CE691 /* ReshootLibraryCollectionViewController.swift */; };
+		22D84F4B1D87878F000CE691 /* ViewImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D84F4A1D87878F000CE691 /* ViewImageViewController.swift */; };
 		22E754B91D835E5300358508 /* FindPhotosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E754B81D835E5300358508 /* FindPhotosViewController.swift */; };
 		22E754BC1D83646E00358508 /* FlickrPhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E754BB1D83646E00358508 /* FlickrPhoto.swift */; };
 		22E754BE1D83688200358508 /* FlickrDownloadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E754BD1D83688200358508 /* FlickrDownloadManager.swift */; };
@@ -30,6 +33,9 @@
 		2231AE981D80CA7F00B35E3A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2231AE9E1D80CB2600B35E3A /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		22A278851D80E8C8008EF1A8 /* ImageCaptureViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCaptureViewController.swift; sourceTree = "<group>"; };
+		22D84F461D877FEE000CE691 /* ReshootPhoto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReshootPhoto.swift; sourceTree = "<group>"; };
+		22D84F481D8780D0000CE691 /* ReshootLibraryCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReshootLibraryCollectionViewController.swift; sourceTree = "<group>"; };
+		22D84F4A1D87878F000CE691 /* ViewImageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewImageViewController.swift; sourceTree = "<group>"; };
 		22E754B81D835E5300358508 /* FindPhotosViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FindPhotosViewController.swift; sourceTree = "<group>"; };
 		22E754BB1D83646E00358508 /* FlickrPhoto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlickrPhoto.swift; sourceTree = "<group>"; };
 		22E754BD1D83688200358508 /* FlickrDownloadManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlickrDownloadManager.swift; sourceTree = "<group>"; };
@@ -90,6 +96,8 @@
 				22A278851D80E8C8008EF1A8 /* ImageCaptureViewController.swift */,
 				22E754B81D835E5300358508 /* FindPhotosViewController.swift */,
 				22E754BD1D83688200358508 /* FlickrDownloadManager.swift */,
+				22D84F481D8780D0000CE691 /* ReshootLibraryCollectionViewController.swift */,
+				22D84F4A1D87878F000CE691 /* ViewImageViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -98,6 +106,7 @@
 			isa = PBXGroup;
 			children = (
 				22E754BB1D83646E00358508 /* FlickrPhoto.swift */,
+				22D84F461D877FEE000CE691 /* ReshootPhoto.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -244,11 +253,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				22D84F491D8780D0000CE691 /* ReshootLibraryCollectionViewController.swift in Sources */,
 				22E754B91D835E5300358508 /* FindPhotosViewController.swift in Sources */,
 				22E754BC1D83646E00358508 /* FlickrPhoto.swift in Sources */,
 				22A278861D80E8C8008EF1A8 /* ImageCaptureViewController.swift in Sources */,
 				22E754BE1D83688200358508 /* FlickrDownloadManager.swift in Sources */,
+				22D84F4B1D87878F000CE691 /* ViewImageViewController.swift in Sources */,
 				2231AE8D1D80CA7F00B35E3A /* AppDelegate.swift in Sources */,
+				22D84F471D877FEE000CE691 /* ReshootPhoto.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
