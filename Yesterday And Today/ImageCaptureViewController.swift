@@ -152,7 +152,6 @@ class ImageCaptureViewController: UIViewController, UIImagePickerControllerDeleg
                     
                     let image = UIImage(CGImage: cgImageRef!, scale: 1.0, orientation: UIImageOrientation.Right)
                     self.cameraView.hidden = true
-                    self.scrollView.alpha = 1.0
                     self.tempImageView.image = image
                     self.tempImageView.hidden = false
                     
@@ -166,7 +165,6 @@ class ImageCaptureViewController: UIViewController, UIImagePickerControllerDeleg
     @IBAction func restartCameraSession(sender: UIButton) {
         showPreCaptureElements()
         self.cameraView.hidden = false
-        self.scrollView.alpha = 0.75
         self.tempImageView.hidden = true
         
     }
