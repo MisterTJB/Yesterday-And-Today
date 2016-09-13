@@ -15,7 +15,7 @@ protocol PassBackImageDelegate {
     func displaySelectedImage(data: UIImage)
 }
 
-class FindPhotosViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, CLLocationManagerDelegate, UIPickerViewDataSource, UIPickerViewDelegate {
+class FindPhotosViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, CLLocationManagerDelegate, UIPickerViewDataSource, UIPickerViewDelegate, MKMapViewDelegate {
     
     @IBOutlet var radiusSlider: UISlider!
     @IBOutlet var searchResultsCollection: UICollectionView!
@@ -65,6 +65,8 @@ class FindPhotosViewController: UIViewController, UICollectionViewDataSource, UI
         afterBeforeDate.dataSource = self
         afterBeforeDate.delegate = self
         
+        mapView.delegate = self
+        
         self.locationManager.requestWhenInUseAuthorization()
         
         if CLLocationManager.locationServicesEnabled() {
@@ -76,15 +78,19 @@ class FindPhotosViewController: UIViewController, UICollectionViewDataSource, UI
         let results = realm.objects(FlickrPhoto.self)
         notificationToken = results.addNotificationBlock { [weak self] (changes: RealmCollectionChange) in
             print ("results changed")
+            if let map = self?.mapView {
+                map.annotations.forEach {
+                    map.removeAnnotation($0)
+                }
             
-            for photo in results {
-                if let latitude = photo.latitude.value,
-                    let longitude = photo.longitude.value,
-                let map = self?.mapView{
-                
-                    let pin = MKPointAnnotation()
-                    pin.coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-                    map.addAnnotation(pin)
+                for photo in results {
+                    if let latitude = photo.latitude.value,
+                        let longitude = photo.longitude.value {
+                    
+                        let pin = MKPointAnnotation()
+                        pin.coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+                        map.addAnnotation(pin)
+                    }
                 }
             
             }
@@ -93,7 +99,6 @@ class FindPhotosViewController: UIViewController, UICollectionViewDataSource, UI
         }
         radiusLabel.text = "\(radiusSlider.value) km"
         mapView.showsUserLocation = true
-        mapView.region = MKCoordinateRegion(center: mapView.userLocation.coordinate, span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05))
     }
     
     deinit {
@@ -118,6 +123,9 @@ class FindPhotosViewController: UIViewController, UICollectionViewDataSource, UI
         userLongitude = (locations.last?.coordinate.longitude)!
     }
     
+    func mapView(mapView: MKMapView, didUpdateUserLocation userLocation: MKUserLocation) {
+        mapView.setRegion(MKCoordinateRegionMake(userLocation.coordinate, MKCoordinateSpanMake(0.05, 0.05)), animated: true)
+    }
     
     @IBAction func search(sender: AnyObject){
         print ("Hit search")
@@ -170,23 +178,11 @@ class FindPhotosViewController: UIViewController, UICollectionViewDataSource, UI
             imageView.image = UIImage(data: photoData)
             imageView.contentMode = .ScaleAspectFill
             cell.backgroundView = imageView
-            //cell.contentView.addSubview(imageView)
+            
+            
             
             
         }
-//        
-//        if let location = locationManager.location,
-        
-        let userLocation = CLLocation(latitude: userLatitude, longitude: userLongitude)
-        if let latitude = results[indexPath.item].latitude.value,
-        longitude = results[indexPath.item].longitude.value
-        {
-            
-            mapView.centerCoordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-            
-            
-        }
-        
         return cell
     }
     
