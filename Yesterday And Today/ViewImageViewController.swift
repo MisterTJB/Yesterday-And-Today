@@ -12,12 +12,13 @@ import RealmSwift
 class ViewImageViewController: UIViewController {
 
     @IBOutlet var imageView: UIImageView!
+    var imageIndex: Int?
     let realm = try! Realm()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let imageData = realm.objects(ReshootPhoto.self).last?.photo
+        let imageData = realm.objects(ReshootPhoto.self)[imageIndex!].photo
         let image = UIImage(data: imageData!)
         imageView.contentMode = .ScaleAspectFill
         imageView.image = image
@@ -33,7 +34,7 @@ class ViewImageViewController: UIViewController {
     @IBAction func deleteImage(sender: AnyObject) {
         
         try! realm.write{
-            realm.delete(realm.objects(ReshootPhoto.self).last!)
+            realm.delete(realm.objects(ReshootPhoto.self)[imageIndex!])
         }
         dismissViewControllerAnimated(true, completion: nil)
         

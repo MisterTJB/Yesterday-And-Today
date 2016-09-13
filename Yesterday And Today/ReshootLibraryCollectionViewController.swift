@@ -113,5 +113,13 @@ class ReshootLibraryCollectionViewController: UICollectionViewController, UIColl
     
     }
     */
+    
+    override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        let viewImageViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("ViewImage") as! ViewImageViewController
+        viewImageViewController.imageIndex = indexPath.item
+        presentViewController(viewImageViewController, animated: true) {
+            collectionView.reloadData()
+        }
+    }
 
 }
