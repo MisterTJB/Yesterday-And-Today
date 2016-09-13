@@ -198,7 +198,11 @@
                                             <action selector="deleteImage:" destination="mDH-mD-Z5d" id="xsC-zS-PIX"/>
                                         </connections>
                                     </barButtonItem>
-                                    <barButtonItem systemItem="action" id="O24-yf-QFf"/>
+                                    <barButtonItem systemItem="action" id="O24-yf-QFf">
+                                        <connections>
+                                            <action selector="share:" destination="mDH-mD-Z5d" id="loM-fh-cjf"/>
+                                        </connections>
+                                    </barButtonItem>
                                     <barButtonItem systemItem="done" id="JDc-fg-g4h">
                                         <connections>
                                             <action selector="close:" destination="mDH-mD-Z5d" id="xfB-LU-SmQ"/>

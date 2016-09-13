@@ -40,6 +40,10 @@ class ViewImageViewController: UIViewController {
         
     }
     
+    @IBAction func share(sender: AnyObject) {
+        let actionSheetViewController = UIActivityViewController(activityItems: [imageView.image!], applicationActivities: nil)
+        presentViewController(actionSheetViewController, animated: true, completion: nil)
+    }
     
     @IBAction func close(sender: AnyObject) {
         print ("Trying to dimiss")
