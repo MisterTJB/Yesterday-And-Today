@@ -17,14 +17,31 @@ class ViewImageViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        updateImageView()
         
+        // Do any additional setup after loading the view.
+    }
+    
+    func updateImageView(){
         let imageData = realm.objects(ReshootPhoto.self)[imageIndex!].photo
         let image = UIImage(data: imageData!)
         imageView.contentMode = .ScaleAspectFill
         imageView.image = image
-        // Do any additional setup after loading the view.
     }
-
+    
+    
+    
+    @IBAction func swipedImage(sender: UISwipeGestureRecognizer) {
+        print ("Trying to swipe")
+        if (sender.direction == UISwipeGestureRecognizerDirection.Right) {
+            imageIndex = max(0, imageIndex! - 1)
+            updateImageView()
+        } else if (sender.direction == UISwipeGestureRecognizerDirection.Left) {
+            imageIndex = min(realm.objects(ReshootPhoto.self).count - 1, imageIndex! + 1)
+            updateImageView()
+        }
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

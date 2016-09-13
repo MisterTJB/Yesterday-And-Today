@@ -194,6 +194,7 @@
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Awd-vG-fNy">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="556"/>
+                                <gestureRecognizers/>
                             </imageView>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="D3O-qK-w0d">
                                 <rect key="frame" x="0.0" y="556" width="600" height="44"/>
@@ -221,6 +222,7 @@
                             </toolbar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="D3O-qK-w0d" firstAttribute="width" secondItem="ovg-ZI-B4b" secondAttribute="width" id="4yI-xz-J3C"/>
                             <constraint firstItem="D3O-qK-w0d" firstAttribute="top" secondItem="Awd-vG-fNy" secondAttribute="bottom" id="P7d-9N-bKh"/>
@@ -228,12 +230,26 @@
                             <constraint firstItem="Awd-vG-fNy" firstAttribute="width" secondItem="ovg-ZI-B4b" secondAttribute="width" id="ZBs-iz-vWC"/>
                             <constraint firstItem="Awd-vG-fNy" firstAttribute="top" secondItem="84x-7O-Eli" secondAttribute="bottom" constant="-20" id="oM7-0d-UCD"/>
                         </constraints>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="dbl-Bh-jzg" appends="YES" id="2A4-wi-WNz"/>
+                            <outletCollection property="gestureRecognizers" destination="EWh-vR-x8B" appends="YES" id="4b4-wE-VzO"/>
+                        </connections>
                     </view>
                     <connections>
                         <outlet property="imageView" destination="Awd-vG-fNy" id="4s6-m7-ZFZ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nGP-vz-wWU" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <swipeGestureRecognizer direction="left" id="dbl-Bh-jzg">
+                    <connections>
+                        <action selector="swipedImage:" destination="mDH-mD-Z5d" id="m2c-oq-lu6"/>
+                    </connections>
+                </swipeGestureRecognizer>
+                <swipeGestureRecognizer direction="right" id="EWh-vR-x8B">
+                    <connections>
+                        <action selector="swipedImage:" destination="mDH-mD-Z5d" id="ABd-3d-qgt"/>
+                    </connections>
+                </swipeGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1857" y="-11"/>
         </scene>
