@@ -22,6 +22,7 @@ class FindPhotosViewController: UIViewController, UICollectionViewDataSource, UI
     @IBOutlet var radiusLabel: UILabel!
     @IBOutlet var mapView: MKMapView!
     
+    @IBOutlet var feedbackLabel: UILabel!
     
     @IBOutlet var afterBeforeDate: UIPickerView!
     
@@ -94,7 +95,6 @@ class FindPhotosViewController: UIViewController, UICollectionViewDataSource, UI
                 }
             
             }
-            
             self!.searchResultsCollection.reloadData()
         }
         radiusLabel.text = "\(radiusSlider.value) km"
@@ -159,7 +159,19 @@ class FindPhotosViewController: UIViewController, UICollectionViewDataSource, UI
             "max_taken_date": String(Int(beforeDate!.timeIntervalSince1970))
             
         ]
-        FlickrDownloadManager.downloadImagesFromFlickrWithParametersAndPersist(parameters)
+        feedbackLabel.text = "Searching for images..."
+        feedbackLabel.hidden = false
+        FlickrDownloadManager.downloadImagesFromFlickrWithParametersAndPersist(parameters) {
+            
+            if self.realm.objects(FlickrPhoto.self).count == 0 {
+                self.feedbackLabel.text = "No results"
+                self.feedbackLabel.hidden = false
+            } else {
+                self.feedbackLabel.hidden = true
+            }
+            
+
+        }
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -178,10 +190,10 @@ class FindPhotosViewController: UIViewController, UICollectionViewDataSource, UI
             imageView.image = UIImage(data: photoData)
             imageView.contentMode = .ScaleAspectFill
             cell.backgroundView = imageView
-            
-            
-            
-            
+        } else {
+            let activityView = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: cell.bounds.width, height: cell.bounds.height))
+            activityView.startAnimating()
+            cell.backgroundView = activityView
         }
         return cell
     }

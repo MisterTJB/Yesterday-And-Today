@@ -11,7 +11,7 @@ import RealmSwift
 
 class FlickrDownloadManager: NSObject {
     
-    static func downloadImagesFromFlickrWithParametersAndPersist(parameters: [String: String]) {
+    static func downloadImagesFromFlickrWithParametersAndPersist(parameters: [String: String], completion: () -> ()) {
         
         var _parameters = parameters
         
@@ -43,6 +43,8 @@ class FlickrDownloadManager: NSObject {
                         return
                 }
                 
+                
+                
                 let realm = try! Realm()
                 for p in photo {
                     if let url = p["url_m"] as? String,
@@ -60,12 +62,15 @@ class FlickrDownloadManager: NSObject {
                         try! realm.write {
                             realm.add(newPhoto)
                         }
+                        print ("Added empty photo")
                         
                     }
                     else {
                         print ("Error unwrapping Flickr results")
                     }
                 }
+                
+                completion()
                 
                 for flickrResult in realm.objects(FlickrPhoto.self) {
                     downloadImageDataForPhoto(flickrResult){ data, error in
