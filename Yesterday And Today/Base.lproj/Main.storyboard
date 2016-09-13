@@ -206,6 +206,7 @@
                                             <action selector="deleteImage:" destination="mDH-mD-Z5d" id="xsC-zS-PIX"/>
                                         </connections>
                                     </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="qeM-35-Geu"/>
                                     <barButtonItem systemItem="action" id="O24-yf-QFf">
                                         <connections>
                                             <action selector="share:" destination="mDH-mD-Z5d" id="loM-fh-cjf"/>
