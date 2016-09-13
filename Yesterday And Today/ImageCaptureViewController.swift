@@ -87,9 +87,8 @@ class ImageCaptureViewController: UIViewController, UIImagePickerControllerDeleg
         
         
         
-        let imageLibraryViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("ViewImage") as! ViewImageViewController
-        imageLibraryViewController.imageView = UIImageView(image: image)
-        presentViewController(imageLibraryViewController, animated: true, completion: nil)
+        let reshootLibraryViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("ImageLibrary") as! ReshootLibraryCollectionViewController
+        navigationController?.pushViewController(reshootLibraryViewController, animated: true)
     }
     
     func getImageFromImagePicker(){

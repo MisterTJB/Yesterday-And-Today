@@ -24,6 +24,7 @@ class ReshootLibraryCollectionViewController: UICollectionViewController, UIColl
         self.collectionView!.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
         
         navigationController?.navigationBarHidden = false
+        collectionView?.delegate = self
 
         // Do any additional setup after loading the view.
     }
@@ -64,10 +65,12 @@ class ReshootLibraryCollectionViewController: UICollectionViewController, UIColl
         // Configure the cell
         
         cell.backgroundColor = UIColor.redColor()
-        if let data = realm.objects(ReshootPhoto.self).first?.photo {
+        if let data = realm.objects(ReshootPhoto.self)[indexPath.item].photo {
             if let image = UIImage(data: data) {
-                cell.contentView.contentMode = .ScaleAspectFit
-                cell.contentView.addSubview(UIImageView(image: image))
+                let imageView = UIImageView(image: image)
+                imageView.frame = CGRect(x: 0, y: 0, width: cell.frame.width, height: cell.frame.height)
+                imageView.contentMode = .ScaleAspectFill
+                cell.contentView.addSubview(imageView)
             }
         }
     
@@ -75,7 +78,8 @@ class ReshootLibraryCollectionViewController: UICollectionViewController, UIColl
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-    return CGSize(width: 2, height: 4 )
+        print ("Getting cell size")
+        return CGSize(width: collectionView.frame.width / 5.0, height: collectionView.frame.height / 5.0 )
     }
     
 
