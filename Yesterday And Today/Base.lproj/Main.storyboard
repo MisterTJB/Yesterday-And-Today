@@ -381,6 +381,7 @@
                         <outletCollection property="preCaptureButtons" destination="Ikj-e7-fW2" collectionClass="NSMutableArray" id="kNq-AD-ekY"/>
                         <outletCollection property="interfaceButtons" destination="PHy-kK-Wmo" collectionClass="NSMutableArray" id="uV9-Yg-GEc"/>
                         <outletCollection property="preCaptureButtons" destination="PHy-kK-Wmo" collectionClass="NSMutableArray" id="o1j-OS-6W4"/>
+                        <outletCollection property="interfaceButtons" destination="2zw-P2-x9E" collectionClass="NSMutableArray" id="GvL-aK-j9m"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Jae-O8-jUn" userLabel="First Responder" sceneMemberID="firstResponder"/>

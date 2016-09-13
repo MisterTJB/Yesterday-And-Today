@@ -79,7 +79,7 @@ class ReshootLibraryCollectionViewController: UICollectionViewController, UIColl
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
         print ("Getting cell size")
-        return CGSize(width: collectionView.frame.width / 5.0, height: collectionView.frame.height / 5.0 )
+        return CGSize(width: collectionView.frame.width / 2.0, height: collectionView.frame.height / 2.0 )
     }
     
 
