@@ -21,6 +21,9 @@ class ImageCaptureViewController: UIViewController, UIImagePickerControllerDeleg
     let captureSession = AVCaptureSession()
     let stillImageOutput = AVCaptureStillImageOutput()
     
+    @IBOutlet var interfaceButtons: [UIButton]!
+    @IBOutlet var preCaptureButtons: [UIButton]!
+    @IBOutlet var postCaptureButtons: [UIButton]!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -83,6 +86,7 @@ class ImageCaptureViewController: UIViewController, UIImagePickerControllerDeleg
         view.layer.renderInContext(UIGraphicsGetCurrentContext()!)
         let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
+        showPreCaptureElements()
         
         let realm = try! Realm()
         try! realm.write {
@@ -90,6 +94,7 @@ class ImageCaptureViewController: UIViewController, UIImagePickerControllerDeleg
             reshoot.photo = UIImageJPEGRepresentation(image, 1.0)
             realm.add(reshoot)
         }
+        
         
         
         
@@ -106,16 +111,34 @@ class ImageCaptureViewController: UIViewController, UIImagePickerControllerDeleg
     }
     
     func hideOnScreenElements(){
+        interfaceButtons.forEach {
+            $0.hidden = true
+        }
+    }
+    
+    func showPreCaptureElements(){
+        hideOnScreenElements()
+        preCaptureButtons.forEach {
+            $0.hidden = false
+        }
         
     }
     
+    func showPostCaptureElements(){
+        hideOnScreenElements()
+        postCaptureButtons.forEach {
+            $0.hidden = false
+        }
+    }
+    
     @IBAction func captureImage(sender: UIButton){
-        
         didPressTakePhoto()
+        showPostCaptureElements()
     }
     
     
     func didPressTakePhoto(){
+        
         if let videoConnection = stillImageOutput.connectionWithMediaType(AVMediaTypeVideo){
             videoConnection.videoOrientation = AVCaptureVideoOrientation.Portrait
             stillImageOutput.captureStillImageAsynchronouslyFromConnection(videoConnection) { sampleBuffer, error in
@@ -135,12 +158,13 @@ class ImageCaptureViewController: UIViewController, UIImagePickerControllerDeleg
                     
                 }
                 
-                
             }
+            
         }
     }
     
     @IBAction func restartCameraSession(sender: UIButton) {
+        showPreCaptureElements()
         self.cameraView.hidden = false
         self.scrollView.alpha = 0.75
         self.tempImageView.hidden = true

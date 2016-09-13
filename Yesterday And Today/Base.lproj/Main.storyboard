@@ -268,32 +268,32 @@
                                     <action selector="captureImage:" destination="KrT-Gb-a7c" eventType="touchUpInside" id="Kfl-yN-Kpa"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PHy-kK-Wmo">
-                                <rect key="frame" x="216" y="255" width="48" height="30"/>
-                                <state key="normal" title="Library"/>
-                                <connections>
-                                    <action selector="showImagePicker:" destination="KrT-Gb-a7c" eventType="touchUpInside" id="oCk-zf-HYB"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ikj-e7-fW2">
-                                <rect key="frame" x="342" y="255" width="37" height="30"/>
-                                <state key="normal" title="Flickr"/>
-                                <connections>
-                                    <action selector="segueToImageSearch:" destination="KrT-Gb-a7c" eventType="touchUpInside" id="8d3-Ba-7qV"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ot3-OL-W9N">
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ot3-OL-W9N">
                                 <rect key="frame" x="20" y="555" width="30" height="30"/>
                                 <state key="normal" title=" ✖"/>
                                 <connections>
                                     <action selector="restartCameraSession:" destination="KrT-Gb-a7c" eventType="touchUpInside" id="x77-d6-Soh"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k61-tb-rJw">
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k61-tb-rJw">
                                 <rect key="frame" x="550" y="555" width="30" height="30"/>
                                 <state key="normal" title="✓"/>
                                 <connections>
                                     <action selector="saveImage:" destination="KrT-Gb-a7c" eventType="touchUpInside" id="RU5-Q0-4Vu"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PHy-kK-Wmo">
+                                <rect key="frame" x="219" y="255" width="48" height="30"/>
+                                <state key="normal" title="Library"/>
+                                <connections>
+                                    <action selector="showImagePicker:" destination="KrT-Gb-a7c" eventType="touchUpInside" id="oCk-zf-HYB"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ikj-e7-fW2">
+                                <rect key="frame" x="345" y="255" width="37" height="30"/>
+                                <state key="normal" title="Flickr"/>
+                                <connections>
+                                    <action selector="segueToImageSearch:" destination="KrT-Gb-a7c" eventType="touchUpInside" id="8d3-Ba-7qV"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -330,6 +330,16 @@
                         <outlet property="scrollView" destination="kbg-ri-QhB" id="U82-dE-twx"/>
                         <outlet property="shootButton" destination="m51-0J-jnH" id="eHi-Xv-0V3"/>
                         <outlet property="tempImageView" destination="Y0r-FM-e2m" id="4Yh-es-sdE"/>
+                        <outletCollection property="interfaceButtons" destination="m51-0J-jnH" collectionClass="NSMutableArray" id="cue-s0-wLI"/>
+                        <outletCollection property="interfaceButtons" destination="PHy-kK-Wmo" collectionClass="NSMutableArray" id="uV9-Yg-GEc"/>
+                        <outletCollection property="interfaceButtons" destination="Ikj-e7-fW2" collectionClass="NSMutableArray" id="BfG-Nl-xEf"/>
+                        <outletCollection property="interfaceButtons" destination="Ot3-OL-W9N" collectionClass="NSMutableArray" id="UUp-PV-AR5"/>
+                        <outletCollection property="interfaceButtons" destination="k61-tb-rJw" collectionClass="NSMutableArray" id="0oW-bH-OF8"/>
+                        <outletCollection property="preCaptureButtons" destination="m51-0J-jnH" collectionClass="NSMutableArray" id="Nfk-I7-1q6"/>
+                        <outletCollection property="preCaptureButtons" destination="PHy-kK-Wmo" collectionClass="NSMutableArray" id="o1j-OS-6W4"/>
+                        <outletCollection property="preCaptureButtons" destination="Ikj-e7-fW2" collectionClass="NSMutableArray" id="kNq-AD-ekY"/>
+                        <outletCollection property="postCaptureButtons" destination="Ot3-OL-W9N" collectionClass="NSMutableArray" id="BKa-Li-Ozz"/>
+                        <outletCollection property="postCaptureButtons" destination="k61-tb-rJw" collectionClass="NSMutableArray" id="DAd-xe-x7f"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Jae-O8-jUn" userLabel="First Responder" sceneMemberID="firstResponder"/>
