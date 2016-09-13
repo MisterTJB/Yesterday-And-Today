@@ -28,11 +28,17 @@ class ImageCaptureViewController: UIViewController, UIImagePickerControllerDeleg
         pastImage.contentMode = .ScaleAspectFill
         scrollView.delegate = self
         
+        
 
         scrollView.minimumZoomScale = 1.0
         scrollView.maximumZoomScale = 3.0
         
         startCamera()
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.navigationBarHidden = true
     }
     
     func startCamera(){
