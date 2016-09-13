@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
@@ -259,71 +260,104 @@
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Kkw-Cw-hrU">
                                         <rect key="frame" x="0.0" y="0.0" width="600" height="300"/>
                                     </imageView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ikj-e7-fW2">
+                                        <rect key="frame" x="562" y="261" width="30" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="Ikj-e7-fW2" secondAttribute="height" multiplier="1:1" id="qAq-Z0-Uix"/>
+                                        </constraints>
+                                        <state key="normal" image="Flickr_100"/>
+                                        <connections>
+                                            <action selector="segueToImageSearch:" destination="KrT-Gb-a7c" eventType="touchUpInside" id="8d3-Ba-7qV"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PHy-kK-Wmo">
+                                        <rect key="frame" x="562" y="223" width="30" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="PHy-kK-Wmo" secondAttribute="height" multiplier="1:1" id="vAE-tX-7So"/>
+                                        </constraints>
+                                        <state key="normal" image="Stack of Photos_100"/>
+                                        <connections>
+                                            <action selector="showImagePicker:" destination="KrT-Gb-a7c" eventType="touchUpInside" id="oCk-zf-HYB"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.96862745289999996" green="0.85098040100000005" blue="0.270588249" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstItem="Kkw-Cw-hrU" firstAttribute="centerX" secondItem="kbg-ri-QhB" secondAttribute="centerX" id="1Yf-Cz-jJ4"/>
+                                    <constraint firstItem="Ikj-e7-fW2" firstAttribute="top" secondItem="PHy-kK-Wmo" secondAttribute="bottom" constant="8" id="9gf-JX-bx5"/>
                                     <constraint firstItem="Kkw-Cw-hrU" firstAttribute="height" secondItem="kbg-ri-QhB" secondAttribute="height" id="J96-Mu-RDQ"/>
+                                    <constraint firstItem="Ikj-e7-fW2" firstAttribute="height" secondItem="PHy-kK-Wmo" secondAttribute="height" id="e3q-ic-0HW"/>
                                     <constraint firstItem="Kkw-Cw-hrU" firstAttribute="width" secondItem="kbg-ri-QhB" secondAttribute="width" id="ueB-KE-z9Q"/>
                                     <constraint firstItem="Kkw-Cw-hrU" firstAttribute="centerY" secondItem="kbg-ri-QhB" secondAttribute="centerY" id="waI-TF-JKY"/>
                                 </constraints>
                             </scrollView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m51-0J-jnH">
-                                <rect key="frame" x="277" y="555" width="46" height="30"/>
-                                <state key="normal" title="Button"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m51-0J-jnH">
+                                <rect key="frame" x="240" y="480" width="120" height="120"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="m51-0J-jnH" secondAttribute="height" multiplier="1:1" id="HCO-U5-rBT"/>
+                                </constraints>
+                                <state key="normal" image="Instagram Filled_100"/>
                                 <connections>
                                     <action selector="captureImage:" destination="KrT-Gb-a7c" eventType="touchUpInside" id="Kfl-yN-Kpa"/>
                                 </connections>
                             </button>
-                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ot3-OL-W9N">
-                                <rect key="frame" x="20" y="555" width="30" height="30"/>
-                                <state key="normal" title=" ✖"/>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ot3-OL-W9N">
+                                <rect key="frame" x="20" y="525" width="60" height="60"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="Ot3-OL-W9N" secondAttribute="height" multiplier="1:1" id="8UG-0i-HnZ"/>
+                                </constraints>
+                                <state key="normal" title=" " image="Close Window Filled_100"/>
                                 <connections>
                                     <action selector="restartCameraSession:" destination="KrT-Gb-a7c" eventType="touchUpInside" id="x77-d6-Soh"/>
                                 </connections>
                             </button>
-                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k61-tb-rJw">
-                                <rect key="frame" x="550" y="555" width="30" height="30"/>
-                                <state key="normal" title="✓"/>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k61-tb-rJw">
+                                <rect key="frame" x="520" y="525" width="60" height="60"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="k61-tb-rJw" secondAttribute="height" multiplier="1:1" id="58j-7V-EGS"/>
+                                </constraints>
+                                <state key="normal" image="Checked Checkbox 2 Filled_100"/>
                                 <connections>
                                     <action selector="saveImage:" destination="KrT-Gb-a7c" eventType="touchUpInside" id="RU5-Q0-4Vu"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PHy-kK-Wmo">
-                                <rect key="frame" x="219" y="255" width="48" height="30"/>
-                                <state key="normal" title="Library"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2zw-P2-x9E">
+                                <rect key="frame" x="562" y="309" width="30" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="2zw-P2-x9E" secondAttribute="height" multiplier="1:1" id="U10-YA-UXe"/>
+                                </constraints>
+                                <state key="normal" image="Wedding Photo Filled_100"/>
                                 <connections>
-                                    <action selector="showImagePicker:" destination="KrT-Gb-a7c" eventType="touchUpInside" id="oCk-zf-HYB"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ikj-e7-fW2">
-                                <rect key="frame" x="345" y="255" width="37" height="30"/>
-                                <state key="normal" title="Flickr"/>
-                                <connections>
-                                    <action selector="segueToImageSearch:" destination="KrT-Gb-a7c" eventType="touchUpInside" id="8d3-Ba-7qV"/>
+                                    <segue destination="MeD-Fd-fs8" kind="show" id="ni5-DX-SLa"/>
                                 </connections>
                             </button>
                         </subviews>
                         <constraints>
                             <constraint firstItem="Y0r-FM-e2m" firstAttribute="centerX" secondItem="aav-Gb-3mi" secondAttribute="centerX" id="0n6-p3-awr"/>
+                            <constraint firstItem="2zw-P2-x9E" firstAttribute="centerY" secondItem="aav-Gb-3mi" secondAttribute="centerY" multiplier="1.08" id="1PJ-Ib-wq8"/>
+                            <constraint firstItem="Ikj-e7-fW2" firstAttribute="centerY" secondItem="aav-Gb-3mi" secondAttribute="centerY" multiplier="0.92" id="5ko-KY-rcw"/>
+                            <constraint firstItem="Ot3-OL-W9N" firstAttribute="height" secondItem="m51-0J-jnH" secondAttribute="height" multiplier="0.5" id="7dO-gI-SqS"/>
                             <constraint firstAttribute="trailingMargin" secondItem="k61-tb-rJw" secondAttribute="trailing" id="A3m-gg-w0e"/>
                             <constraint firstItem="Y0r-FM-e2m" firstAttribute="width" secondItem="aav-Gb-3mi" secondAttribute="width" id="B2B-Ey-dRG"/>
                             <constraint firstItem="kbg-ri-QhB" firstAttribute="width" secondItem="aav-Gb-3mi" secondAttribute="width" id="DAy-aF-Zil"/>
                             <constraint firstItem="m51-0J-jnH" firstAttribute="centerX" secondItem="hey-Pg-drA" secondAttribute="centerX" id="EBL-RD-Qdq"/>
-                            <constraint firstItem="Ikj-e7-fW2" firstAttribute="centerX" secondItem="aav-Gb-3mi" secondAttribute="centerX" multiplier="1.2" id="EPi-MH-tkh"/>
+                            <constraint firstItem="2zw-P2-x9E" firstAttribute="centerX" secondItem="Ikj-e7-fW2" secondAttribute="centerX" id="GYT-P3-DeW"/>
+                            <constraint firstItem="2zw-P2-x9E" firstAttribute="width" secondItem="Ikj-e7-fW2" secondAttribute="width" id="H4I-Ub-puo"/>
+                            <constraint firstItem="m51-0J-jnH" firstAttribute="width" secondItem="aav-Gb-3mi" secondAttribute="width" multiplier="0.2" id="Iyq-XM-cdl"/>
                             <constraint firstItem="Y0r-FM-e2m" firstAttribute="height" secondItem="aav-Gb-3mi" secondAttribute="height" id="Km6-0d-056"/>
                             <constraint firstItem="kbg-ri-QhB" firstAttribute="centerX" secondItem="aav-Gb-3mi" secondAttribute="centerX" id="Kph-sG-fSb"/>
                             <constraint firstAttribute="leadingMargin" secondItem="Ot3-OL-W9N" secondAttribute="leading" id="Lcs-U2-iZF"/>
-                            <constraint firstItem="PHy-kK-Wmo" firstAttribute="centerX" secondItem="aav-Gb-3mi" secondAttribute="centerX" multiplier="0.8" id="Quz-En-DlM"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="PHy-kK-Wmo" secondAttribute="trailing" constant="-12" id="PeB-ob-GA8"/>
                             <constraint firstItem="qOn-fA-ASw" firstAttribute="top" secondItem="Ot3-OL-W9N" secondAttribute="bottom" constant="15" id="SWJ-vs-Eyx"/>
+                            <constraint firstItem="Ikj-e7-fW2" firstAttribute="height" secondItem="aav-Gb-3mi" secondAttribute="height" multiplier="0.05" id="X3z-ts-RT5"/>
                             <constraint firstItem="Y0r-FM-e2m" firstAttribute="centerY" secondItem="aav-Gb-3mi" secondAttribute="centerY" id="cDV-z1-zTw"/>
-                            <constraint firstItem="k61-tb-rJw" firstAttribute="centerY" secondItem="m51-0J-jnH" secondAttribute="centerY" id="dCl-hN-oeK"/>
                             <constraint firstItem="kbg-ri-QhB" firstAttribute="top" secondItem="PeE-od-sOh" secondAttribute="bottom" constant="-20" id="fR0-OB-H5I"/>
                             <constraint firstItem="hey-Pg-drA" firstAttribute="width" secondItem="aav-Gb-3mi" secondAttribute="width" id="hFt-0m-UDh"/>
                             <constraint firstItem="hey-Pg-drA" firstAttribute="centerX" secondItem="aav-Gb-3mi" secondAttribute="centerX" id="hqN-wY-3ew"/>
-                            <constraint firstItem="m51-0J-jnH" firstAttribute="centerY" secondItem="aav-Gb-3mi" secondAttribute="centerY" multiplier="1.9" id="jjU-wP-TTv"/>
-                            <constraint firstItem="PHy-kK-Wmo" firstAttribute="centerY" secondItem="aav-Gb-3mi" secondAttribute="centerY" multiplier="0.9" id="kdt-Xv-Uvz"/>
-                            <constraint firstItem="Ikj-e7-fW2" firstAttribute="centerY" secondItem="aav-Gb-3mi" secondAttribute="centerY" multiplier="0.9" id="oXK-ts-UbX"/>
+                            <constraint firstItem="k61-tb-rJw" firstAttribute="centerY" secondItem="Ot3-OL-W9N" secondAttribute="centerY" id="ii1-SH-dXi"/>
+                            <constraint firstItem="m51-0J-jnH" firstAttribute="centerY" secondItem="aav-Gb-3mi" secondAttribute="centerY" multiplier="1.8" id="jjU-wP-TTv"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Ikj-e7-fW2" secondAttribute="trailing" constant="-12" id="nU6-P0-tNh"/>
+                            <constraint firstItem="k61-tb-rJw" firstAttribute="width" secondItem="Ot3-OL-W9N" secondAttribute="width" id="qO2-Oo-iyK"/>
                             <constraint firstItem="hey-Pg-drA" firstAttribute="centerY" secondItem="aav-Gb-3mi" secondAttribute="centerY" id="t8h-Ah-yHk"/>
                             <constraint firstItem="kbg-ri-QhB" firstAttribute="height" secondItem="aav-Gb-3mi" secondAttribute="height" multiplier="0.5" id="vp1-9T-nlU"/>
                             <constraint firstItem="hey-Pg-drA" firstAttribute="height" secondItem="aav-Gb-3mi" secondAttribute="height" id="xQ1-Tm-ycY"/>
@@ -338,15 +372,15 @@
                         <outlet property="shootButton" destination="m51-0J-jnH" id="eHi-Xv-0V3"/>
                         <outlet property="tempImageView" destination="Y0r-FM-e2m" id="4Yh-es-sdE"/>
                         <outletCollection property="interfaceButtons" destination="m51-0J-jnH" collectionClass="NSMutableArray" id="cue-s0-wLI"/>
-                        <outletCollection property="interfaceButtons" destination="PHy-kK-Wmo" collectionClass="NSMutableArray" id="uV9-Yg-GEc"/>
-                        <outletCollection property="interfaceButtons" destination="Ikj-e7-fW2" collectionClass="NSMutableArray" id="BfG-Nl-xEf"/>
                         <outletCollection property="interfaceButtons" destination="Ot3-OL-W9N" collectionClass="NSMutableArray" id="UUp-PV-AR5"/>
                         <outletCollection property="interfaceButtons" destination="k61-tb-rJw" collectionClass="NSMutableArray" id="0oW-bH-OF8"/>
                         <outletCollection property="preCaptureButtons" destination="m51-0J-jnH" collectionClass="NSMutableArray" id="Nfk-I7-1q6"/>
-                        <outletCollection property="preCaptureButtons" destination="PHy-kK-Wmo" collectionClass="NSMutableArray" id="o1j-OS-6W4"/>
-                        <outletCollection property="preCaptureButtons" destination="Ikj-e7-fW2" collectionClass="NSMutableArray" id="kNq-AD-ekY"/>
                         <outletCollection property="postCaptureButtons" destination="Ot3-OL-W9N" collectionClass="NSMutableArray" id="BKa-Li-Ozz"/>
                         <outletCollection property="postCaptureButtons" destination="k61-tb-rJw" collectionClass="NSMutableArray" id="DAd-xe-x7f"/>
+                        <outletCollection property="interfaceButtons" destination="Ikj-e7-fW2" collectionClass="NSMutableArray" id="BfG-Nl-xEf"/>
+                        <outletCollection property="preCaptureButtons" destination="Ikj-e7-fW2" collectionClass="NSMutableArray" id="kNq-AD-ekY"/>
+                        <outletCollection property="interfaceButtons" destination="PHy-kK-Wmo" collectionClass="NSMutableArray" id="uV9-Yg-GEc"/>
+                        <outletCollection property="preCaptureButtons" destination="PHy-kK-Wmo" collectionClass="NSMutableArray" id="o1j-OS-6W4"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Jae-O8-jUn" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -390,4 +424,12 @@
             <point key="canvasLocation" x="1886" y="706"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="Checked Checkbox 2 Filled_100" width="100" height="100"/>
+        <image name="Close Window Filled_100" width="100" height="100"/>
+        <image name="Flickr_100" width="100" height="100"/>
+        <image name="Instagram Filled_100" width="100" height="100"/>
+        <image name="Stack of Photos_100" width="100" height="100"/>
+        <image name="Wedding Photo Filled_100" width="100" height="100"/>
+    </resources>
 </document>
