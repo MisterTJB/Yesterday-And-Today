@@ -22,6 +22,7 @@ class FindPhotosViewController: UIViewController, UICollectionViewDataSource, UI
     @IBOutlet var radiusLabel: UILabel!
     @IBOutlet var mapView: MKMapView!
     
+    @IBOutlet var searchButton: UIBarButtonItem!
     @IBOutlet var feedbackLabel: UILabel!
     
     @IBOutlet var afterBeforeDate: UIPickerView!
@@ -105,6 +106,7 @@ class FindPhotosViewController: UIViewController, UICollectionViewDataSource, UI
                 }
             
             }
+            self!.toggleSearchButton()
             self!.searchResultsCollection.reloadData()
         }
         radiusLabel.text = "\(radiusSlider.value) km"
@@ -156,8 +158,27 @@ class FindPhotosViewController: UIViewController, UICollectionViewDataSource, UI
 //        }
 //    }
     
+    func dataIsDownloading() -> Bool {
+        
+        var retVal = false
+        for image in realm.objects(FlickrPhoto.self) {
+            retVal = (image.photo == nil) || retVal
+        }
+        return retVal
+    }
+    
+    func toggleSearchButton(){
+        
+        if dataIsDownloading(){
+            searchButton.enabled = false
+        } else {
+            searchButton.enabled = true
+        }
+    }
+    
     @IBAction func search(sender: AnyObject){
         print ("Hit search")
+        searchButton.enabled = false
         try! realm.write {
             realm.delete(realm.objects(FlickrPhoto.self))
         }
@@ -190,16 +211,32 @@ class FindPhotosViewController: UIViewController, UICollectionViewDataSource, UI
         ]
         feedbackLabel.text = "Searching for images..."
         feedbackLabel.hidden = false
-        FlickrDownloadManager.downloadImagesFromFlickrWithParametersAndPersist(parameters) {
+        FlickrDownloadManager.downloadImagesFromFlickrWithParametersAndPersist(parameters) { error in
             
-            if self.realm.objects(FlickrPhoto.self).count == 0 {
-                self.feedbackLabel.text = "No results"
-                self.feedbackLabel.hidden = false
+            if let error = error {
+                let alertVC = UIAlertController(title: "Network Error", message: "Something went wrong! Check your network availability and try again", preferredStyle: UIAlertControllerStyle.Alert)
+                let dismiss = UIAlertAction(title: "OK", style: UIAlertActionStyle.Cancel) { alertAction in
+                    try! self.realm.write {
+                        self.realm.delete(self.realm.objects(FlickrPhoto.self))
+                    }
+                    self.searchResultsCollection.reloadData()
+                    self.feedbackLabel.text = "Let's find some photos!"
+                    self.feedbackLabel.hidden = false
+                }
+                alertVC.addAction(dismiss)
+                self.presentViewController(alertVC, animated: true, completion: nil)
+                
             } else {
-                self.feedbackLabel.hidden = true
-            }
             
-
+                if self.realm.objects(FlickrPhoto.self).count == 0 {
+                    self.feedbackLabel.text = "No results"
+                    self.feedbackLabel.hidden = false
+                    self.searchButton.enabled = true
+                } else {
+                    self.feedbackLabel.hidden = true
+                }
+                
+            }
         }
     }
     
@@ -239,4 +276,5 @@ class FindPhotosViewController: UIViewController, UICollectionViewDataSource, UI
         dismissViewControllerAnimated(true, completion: nil)
         
     }
+    
 }

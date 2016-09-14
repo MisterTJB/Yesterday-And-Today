@@ -167,6 +167,7 @@
                         <outlet property="mapView" destination="43L-CV-ekn" id="rMF-Hp-Amt"/>
                         <outlet property="radiusLabel" destination="jn4-wb-wXX" id="EZY-0U-ofZ"/>
                         <outlet property="radiusSlider" destination="am9-EZ-ooH" id="cN0-Zq-4zy"/>
+                        <outlet property="searchButton" destination="5Zd-RW-0nY" id="Z5L-0s-Xs2"/>
                         <outlet property="searchResultsCollection" destination="b6h-tR-3F6" id="vkd-rM-sw7"/>
                     </connections>
                 </viewController>

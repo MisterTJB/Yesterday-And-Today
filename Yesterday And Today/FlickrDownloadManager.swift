@@ -11,7 +11,8 @@ import RealmSwift
 
 class FlickrDownloadManager: NSObject {
     
-    static func downloadImagesFromFlickrWithParametersAndPersist(parameters: [String: String], completion: () -> ()) {
+    
+    static func downloadImagesFromFlickrWithParametersAndPersist(parameters: [String: String], completion: (NSError?) -> ()) {
         
         var _parameters = parameters
         
@@ -30,7 +31,7 @@ class FlickrDownloadManager: NSObject {
                 
                 guard response.result.isSuccess else {
                     print("Error while fetching photos: \(response.result.error)")
-                    //completion(nil, NSError(domain: "Initial Flickr request was unsuccessful", code: 0, userInfo: nil))
+                    completion(NSError(domain: "Initial Flickr request was unsuccessful", code: 0, userInfo: nil))
                     return
                 }
                 
@@ -38,8 +39,7 @@ class FlickrDownloadManager: NSObject {
                 guard let result = response.result.value as? [String: AnyObject],
                     photos = result["photos"] as? [String: AnyObject],
                     photo = photos["photo"] as? [[String: AnyObject]] else {
-                        print ("Result is lame")
-                        //completion(nil, NSError(domain: "Initial Flickr request response was malformed", code: 0, userInfo: nil))
+                        completion(NSError(domain: "Initial Flickr request response was malformed", code: 0, userInfo: nil))
                         return
                 }
                 
@@ -70,13 +70,11 @@ class FlickrDownloadManager: NSObject {
                     }
                 }
                 
-                completion()
-                
                 for flickrResult in realm.objects(FlickrPhoto.self) {
                     downloadImageDataForPhoto(flickrResult){ data, error in
                         
                         if let error = error {
-                            print (error)
+                            completion(error)
                         }
                         else {
                             
@@ -93,6 +91,7 @@ class FlickrDownloadManager: NSObject {
                     }
                     
                 }
+                completion(nil)
 
         }
     
