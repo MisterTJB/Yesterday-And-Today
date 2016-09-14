@@ -34,8 +34,8 @@ class FindPhotosViewController: UIViewController, UICollectionViewDataSource, UI
     let locationManager = CLLocationManager()
     private var userLongitude = 171.612499
     private var userLatitude = -43.500124
-    private var selectedAfterYear = 1825
-    private var selectedBeforeYear = 1825
+    private var selectedAfterYear = 2010
+    private var selectedBeforeYear = 2016
     
     func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         return (2017 - 1825)
