@@ -33,10 +33,10 @@ class ViewImageViewController: UIViewController {
     
     @IBAction func swipedImage(sender: UISwipeGestureRecognizer) {
         print ("Trying to swipe")
-        if (sender.direction == UISwipeGestureRecognizerDirection.Right) {
+        if (sender.direction == UISwipeGestureRecognizerDirection.Left) {
             imageIndex = max(0, imageIndex! - 1)
             updateImageView()
-        } else if (sender.direction == UISwipeGestureRecognizerDirection.Left) {
+        } else if (sender.direction == UISwipeGestureRecognizerDirection.Right) {
             imageIndex = min(realm.objects(ReshootPhoto.self).count - 1, imageIndex! + 1)
             updateImageView()
         }

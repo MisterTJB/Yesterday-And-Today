@@ -134,7 +134,8 @@ class ReshootLibraryCollectionViewController: UICollectionViewController, UIColl
     
     override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         let viewImageViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("ViewImage") as! ViewImageViewController
-        viewImageViewController.imageIndex = indexPath.item
+        let lastIndex = realm.objects(ReshootPhoto.self).count - 1
+        viewImageViewController.imageIndex = lastIndex - indexPath.item
         presentViewController(viewImageViewController, animated: true) {
             collectionView.reloadData()
         }
