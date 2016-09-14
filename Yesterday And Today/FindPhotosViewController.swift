@@ -71,6 +71,8 @@ class FindPhotosViewController: UIViewController, UICollectionViewDataSource, UI
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        loadSearchParameters()
+        
         searchResultsCollection.dataSource = self
         searchResultsCollection.delegate = self
         
@@ -119,8 +121,10 @@ class FindPhotosViewController: UIViewController, UICollectionViewDataSource, UI
             feedbackLabel.hidden = true
         }
         
-        afterBeforeDate.selectRow(2010 - 1825, inComponent: 0, animated: true)
-        afterBeforeDate.selectRow(2016 - 1825, inComponent: 1, animated: true)
+        afterBeforeDate.selectRow(selectedAfterYear - 1825, inComponent: 0, animated: true)
+        afterBeforeDate.selectRow(selectedBeforeYear - 1825, inComponent: 1, animated: true)
+        
+        
     }
     
     deinit {
@@ -179,6 +183,7 @@ class FindPhotosViewController: UIViewController, UICollectionViewDataSource, UI
     @IBAction func search(sender: AnyObject){
         print ("Hit search")
         searchButton.enabled = false
+        persistSearchParameters()
         try! realm.write {
             realm.delete(realm.objects(FlickrPhoto.self))
         }
@@ -276,5 +281,37 @@ class FindPhotosViewController: UIViewController, UICollectionViewDataSource, UI
         dismissViewControllerAnimated(true, completion: nil)
         
     }
+    
+    func persistSearchParameters(){
+        NSUserDefaults.standardUserDefaults().setInteger(selectedBeforeYear, forKey: "beforeYear")
+        NSUserDefaults.standardUserDefaults().setInteger(selectedAfterYear, forKey: "afterYear")
+        NSUserDefaults.standardUserDefaults().setFloat(radiusSlider.value, forKey: "radius")
+    }
+    
+    func loadSearchParameters(){
+        
+        let before = NSUserDefaults.standardUserDefaults().integerForKey("beforeYear")
+        let after = NSUserDefaults.standardUserDefaults().integerForKey("afterYear")
+        let radius = NSUserDefaults.standardUserDefaults().floatForKey("radius")
+        
+        if before != 0 {
+            selectedBeforeYear = before
+        } else {
+            selectedBeforeYear = 2016
+        }
+        
+        if after != 0 {
+            selectedAfterYear = after
+        } else {
+            selectedAfterYear = 2010
+        }
+        
+        if radius != 0 {
+            radiusSlider.value = radius
+        } else {
+            radiusSlider.value = 0.5
+        }
+    }
+
     
 }
