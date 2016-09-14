@@ -14,6 +14,8 @@ private let realm = try! Realm()
 
 class ReshootLibraryCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
 
+    @IBOutlet var feedbackLabel: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -25,13 +27,29 @@ class ReshootLibraryCollectionViewController: UICollectionViewController, UIColl
         
         navigationController?.navigationBarHidden = false
         collectionView?.delegate = self
+        
+        toggleFeedback()
 
         // Do any additional setup after loading the view.
+    }
+    
+    func toggleFeedback(){
+        if (realm.objects(ReshootPhoto.self).count == 0) {
+            feedbackLabel.text = "Your album is empty"
+            feedbackLabel.hidden = false
+        } else {
+            feedbackLabel.hidden = true
+        }
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        toggleFeedback()
     }
 
     /*
