@@ -130,7 +130,7 @@ class FindPhotosViewController: UIViewController, UICollectionViewDataSource, UI
     @IBAction func search(sender: AnyObject){
         print ("Hit search")
         try! realm.write {
-            realm.deleteAll()
+            realm.delete(realm.objects(FlickrPhoto.self))
         }
         
         
