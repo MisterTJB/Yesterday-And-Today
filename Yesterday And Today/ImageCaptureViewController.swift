@@ -25,6 +25,9 @@ class ImageCaptureViewController: UIViewController, UIImagePickerControllerDeleg
     @IBOutlet var preCaptureButtons: [UIButton]!
     @IBOutlet var postCaptureButtons: [UIButton]!
     
+    @IBOutlet var chooseFromLibrary: UIButton!
+    @IBOutlet var searchFlickr: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBarHidden = true
@@ -39,9 +42,39 @@ class ImageCaptureViewController: UIViewController, UIImagePickerControllerDeleg
         startCamera()
     }
     
+    func toggleWobble(){
+        if let _ = pastImage.image {
+            stopWobble()
+        } else {
+            startWobble()
+        }
+    }
+    
+    func stopWobble(){
+        
+        let animation = {
+            self.chooseFromLibrary.transform = CGAffineTransformIdentity
+            self.searchFlickr.transform = CGAffineTransformIdentity
+        }
+        
+        UIView.animateWithDuration(0.1, delay: 0.0, options: [UIViewAnimationOptions.AllowUserInteraction, UIViewAnimationOptions.Repeat, UIViewAnimationOptions.Autoreverse], animations: animation, completion: nil)
+    }
+    
+    func startWobble() {
+    chooseFromLibrary.transform = CGAffineTransformRotate(CGAffineTransformIdentity, (-5 * 3.141) / 180.0)
+    searchFlickr.transform = CGAffineTransformRotate(CGAffineTransformIdentity, (5 * 3.141) / 180.0)
+    
+        let animation = {self.chooseFromLibrary.transform = CGAffineTransformRotate(CGAffineTransformIdentity, (5 * 3.141) / 180.0)
+            self.searchFlickr.transform = CGAffineTransformRotate(CGAffineTransformIdentity, (-5 * 3.141) / 180.0)
+}
+    UIView.animateWithDuration(0.1, delay: 0.0, options: [UIViewAnimationOptions.AllowUserInteraction, UIViewAnimationOptions.Repeat, UIViewAnimationOptions.Autoreverse], animations: animation, completion: nil)
+    }
+    
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBarHidden = true
+        toggleWobble()
+        
     }
     
     func startCamera(){
@@ -100,6 +133,10 @@ class ImageCaptureViewController: UIViewController, UIImagePickerControllerDeleg
         
         let reshootLibraryViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("ImageLibrary") as! ReshootLibraryCollectionViewController
         navigationController?.pushViewController(reshootLibraryViewController, animated: true)
+        pastImage.image = nil
+        showPreCaptureElements()
+        self.cameraView.hidden = false
+        self.tempImageView.hidden = true
     }
     
     func getImageFromImagePicker(){
@@ -173,10 +210,14 @@ class ImageCaptureViewController: UIViewController, UIImagePickerControllerDeleg
         findPhotosVC.delegate = self
         presentViewController(findPhotosVC, animated: true, completion: nil)
     }
+    
     func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?) {
         pastImage.image = image
+        self.stopWobble()
         print (image.size)
-        picker.dismissViewControllerAnimated(true, completion: nil)
+        picker.dismissViewControllerAnimated(true) {
+            print ("Completed")
+        }
     }
     
     func viewForZoomingInScrollView(scrollView: UIScrollView) -> UIView? {
@@ -185,6 +226,7 @@ class ImageCaptureViewController: UIViewController, UIImagePickerControllerDeleg
     
     func displaySelectedImage(data: UIImage) {
         pastImage.image = data
+        toggleWobble()
     }
     
 }
