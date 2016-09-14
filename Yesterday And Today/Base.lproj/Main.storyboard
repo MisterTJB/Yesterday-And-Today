@@ -304,7 +304,7 @@
                                     <constraint firstItem="Kkw-Cw-hrU" firstAttribute="centerY" secondItem="kbg-ri-QhB" secondAttribute="centerY" id="waI-TF-JKY"/>
                                 </constraints>
                             </scrollView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m51-0J-jnH">
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m51-0J-jnH">
                                 <rect key="frame" x="240" y="480" width="120" height="120"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="m51-0J-jnH" secondAttribute="height" multiplier="1:1" id="HCO-U5-rBT"/>

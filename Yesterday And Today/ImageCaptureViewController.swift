@@ -72,9 +72,11 @@ class ImageCaptureViewController: UIViewController, UIImagePickerControllerDeleg
     
     func toggleWobble(){
         if let _ = pastImage.image {
+            shootButton.hidden = false
             stopWobble()
         } else {
             startWobble()
+            shootButton.hidden = true
         }
     }
     
