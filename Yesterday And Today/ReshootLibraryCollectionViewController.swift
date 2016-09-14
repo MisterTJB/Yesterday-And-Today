@@ -82,8 +82,8 @@ class ReshootLibraryCollectionViewController: UICollectionViewController, UIColl
     
         // Configure the cell
         
-        cell.backgroundColor = UIColor.redColor()
-        if let data = realm.objects(ReshootPhoto.self)[indexPath.item].photo {
+        let lastIndex = realm.objects(ReshootPhoto.self).count - 1
+        if let data = realm.objects(ReshootPhoto.self)[lastIndex - indexPath.item].photo {
             if let image = UIImage(data: data) {
                 let imageView = UIImageView(image: image)
                 imageView.frame = CGRect(x: 0, y: 0, width: cell.frame.width, height: cell.frame.height)
