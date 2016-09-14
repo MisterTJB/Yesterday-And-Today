@@ -38,7 +38,7 @@ class FindPhotosViewController: UIViewController, UICollectionViewDataSource, UI
     private var selectedBeforeYear = 1825
     
     func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return (2016 - 1825)
+        return (2017 - 1825)
     }
     
     func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
@@ -46,14 +46,24 @@ class FindPhotosViewController: UIViewController, UICollectionViewDataSource, UI
     }
     
     func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        
         return String(1825 + row)
     }
     
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        if component == 0 {
-            selectedAfterYear = 1825 + row
-        } else if component == 1 {
-            selectedBeforeYear = 1825 + row
+        
+        if component == 0 && row >  pickerView.selectedRowInComponent(1) {
+            pickerView.selectRow(pickerView.selectedRowInComponent(1), inComponent: 0, animated: true)
+        } else if component == 1 && row <  pickerView.selectedRowInComponent(0) {
+            pickerView.selectRow(pickerView.selectedRowInComponent(0), inComponent: 1, animated: true)
+        } else {
+        
+        
+            if component == 0 {
+                selectedAfterYear = 1825 + row
+            } else if component == 1 {
+                selectedBeforeYear = 1825 + row
+            }
         }
     }
     
@@ -99,6 +109,16 @@ class FindPhotosViewController: UIViewController, UICollectionViewDataSource, UI
         }
         radiusLabel.text = "\(radiusSlider.value) km"
         mapView.showsUserLocation = true
+        
+        if results.count == 0 {
+            feedbackLabel.text = "Let's find some photos!"
+            feedbackLabel.hidden = false
+        } else {
+            feedbackLabel.hidden = true
+        }
+        
+        afterBeforeDate.selectRow(2010 - 1825, inComponent: 0, animated: true)
+        afterBeforeDate.selectRow(2016 - 1825, inComponent: 1, animated: true)
     }
     
     deinit {
@@ -106,6 +126,7 @@ class FindPhotosViewController: UIViewController, UICollectionViewDataSource, UI
     }
     
     @IBAction func updateRadius(sender: UISlider) {
+        sender.value = round(2 * sender.value)/2.0
         radiusLabel.text = "\(sender.value) km"
     }
     
@@ -124,8 +145,16 @@ class FindPhotosViewController: UIViewController, UICollectionViewDataSource, UI
     }
     
     func mapView(mapView: MKMapView, didUpdateUserLocation userLocation: MKUserLocation) {
-        mapView.setRegion(MKCoordinateRegionMake(userLocation.coordinate, MKCoordinateSpanMake(0.05, 0.05)), animated: true)
+        mapView.setRegion(MKCoordinateRegionMake(userLocation.coordinate, MKCoordinateSpanMake(0.01, 0.01)), animated: true)
     }
+    
+//    func mapView(mapView: MKMapView, didSelectAnnotationView view: MKAnnotationView) {
+//        if let pin = view as? MKPinAnnotationView {
+//            print ("Changing color")
+//            pin.pinTintColor = UIColor.greenColor()
+//            pin.selected = false
+//        }
+//    }
     
     @IBAction func search(sender: AnyObject){
         print ("Hit search")
