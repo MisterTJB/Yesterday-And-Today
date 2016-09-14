@@ -28,18 +28,46 @@ class ImageCaptureViewController: UIViewController, UIImagePickerControllerDeleg
     @IBOutlet var chooseFromLibrary: UIButton!
     @IBOutlet var searchFlickr: UIButton!
     
+    let notificationCenter = NSNotificationCenter.defaultCenter()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBarHidden = true
         pastImage.contentMode = .ScaleAspectFill
         scrollView.delegate = self
         
+        notificationCenter.addObserver(self,
+                                       selector:#selector(ImageCaptureViewController.applicationWillResignActiveNotification),
+                                       name:UIApplicationWillResignActiveNotification,
+                                       object:nil)
         
+        notificationCenter.addObserver(self,
+                                       selector:#selector(ImageCaptureViewController.applicationDidBecomeActiveNotification),
+                                       name:UIApplicationDidBecomeActiveNotification,
+                                       object:nil)
 
         scrollView.minimumZoomScale = 1.0
         scrollView.maximumZoomScale = 3.0
         
         startCamera()
+    }
+    
+    deinit {
+        
+        notificationCenter.removeObserver(self,
+                                          name:UIApplicationDidBecomeActiveNotification,
+                                          object:nil)
+        notificationCenter.removeObserver(self,
+                                          name:UIApplicationWillResignActiveNotification,
+                                          object:nil)
+    }
+    
+    func applicationWillResignActiveNotification(){
+        stopWobble()
+    }
+    
+    func applicationDidBecomeActiveNotification(){
+        toggleWobble()
     }
     
     func toggleWobble(){
@@ -70,12 +98,15 @@ class ImageCaptureViewController: UIViewController, UIImagePickerControllerDeleg
     UIView.animateWithDuration(0.1, delay: 0.0, options: [UIViewAnimationOptions.AllowUserInteraction, UIViewAnimationOptions.Repeat, UIViewAnimationOptions.Autoreverse], animations: animation, completion: nil)
     }
     
+    
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBarHidden = true
         toggleWobble()
+        print ("View is appearing")
         
     }
+    
     
     func startCamera(){
         // Get back camera
