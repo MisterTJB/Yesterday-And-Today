@@ -4,7 +4,7 @@
 
 ### Overview
 
-Yesterday and Today is an app that aids in creating 'past and present' photographs (e.g. [/r/pastandpresentpics](https://www.reddit.com/r/PastAndPresentPics/)). The user is presented with a split screen, wherein the top half contains a 'past' image, and the bottom half shows the input to the camera, enabling them to direct the 'present' scene such that it matches the pose, perspective, etc. of the past image.
+Yesterday and Today is an app that aids in creating (very basic!) 'past and present' photographs (e.g. [/r/pastandpresentpics](https://www.reddit.com/r/PastAndPresentPics/)). The user is presented with a split screen, wherein the top half contains a 'past' image, and the bottom half shows the input to the camera, enabling them to direct the 'present' scene such that it matches the pose, perspective, etc. of the past image.
 
 Users are able to source an image from their photo library, or find a nearby photo on Flickr. To clue the user in to how to progress, the relevant buttons are animated.
 
