@@ -18,9 +18,7 @@ When a user is satisfied with their choice of image, they return to the initial 
 
 ![Accepting or rejecting an image](/Images/accept_reject.PNG)
 
-
-
-The user transitions to their library whenever they save a captured image, or when they press the library button (the frame with a heart). The library view displays a grid of 'past and present' photos that the user can scroll through, ordered from most recent to least recent.
+The user transitions to their library whenever they save a captured image, or when they press the library button (the frame with a heart, which appears whenever they are not required to evaluate a captured image). The library view displays a grid of 'past and present' photos that the user can scroll through, ordered from most recent to least recent.
 
 ![The library view](/Images/library.PNG)
 
