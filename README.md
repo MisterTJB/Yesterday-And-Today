@@ -28,7 +28,7 @@ Tapping on an image displays that image in fullscreen, with options to delete th
 
 ### Building
 
-The app can be built by cloning this GitHub repository and opening `Yesterday and Today.xcodeworkspace`, then running it as per usual.
+The app can be built by cloning this GitHub repository and opening `Yesterday and Today.xcodeworkspace`, then running it as per usual via the Xcode `Run` command.
 
 Naturally, the app must be run on a device with a rear-facing camera (though it will function in the simulator, which will only render a black camera 'input').
 
