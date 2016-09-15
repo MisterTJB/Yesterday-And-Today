@@ -69,7 +69,6 @@ class FindPhotosViewController: UIViewController {
         // Configure realm
         let results = realm.objects(FlickrPhoto.self)
         notificationToken = results.addNotificationBlock { [weak self] (changes: RealmCollectionChange) in
-            print ("results changed")
             self!.toggleSearchButton()
             self!.searchResultsCollection.reloadData()
         }
