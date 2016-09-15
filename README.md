@@ -104,4 +104,4 @@ Also, search parameters are stored in NSUserDefaults.
 
 _The app functions as described in the README, without crashes or other runtime errors_
 
-I hope so!
+I hope so! The app works as stated on an iPhone 6
