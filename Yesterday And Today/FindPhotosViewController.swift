@@ -92,22 +92,6 @@ class FindPhotosViewController: UIViewController, UICollectionViewDataSource, UI
         let results = realm.objects(FlickrPhoto.self)
         notificationToken = results.addNotificationBlock { [weak self] (changes: RealmCollectionChange) in
             print ("results changed")
-            if let map = self?.mapView {
-                map.annotations.forEach {
-                    map.removeAnnotation($0)
-                }
-            
-                for photo in results {
-                    if let latitude = photo.latitude.value,
-                        let longitude = photo.longitude.value {
-                    
-                        let pin = MKPointAnnotation()
-                        pin.coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-                        map.addAnnotation(pin)
-                    }
-                }
-            
-            }
             self!.toggleSearchButton()
             self!.searchResultsCollection.reloadData()
         }
@@ -151,16 +135,8 @@ class FindPhotosViewController: UIViewController, UICollectionViewDataSource, UI
     }
     
     func mapView(mapView: MKMapView, didUpdateUserLocation userLocation: MKUserLocation) {
-        mapView.setRegion(MKCoordinateRegionMake(userLocation.coordinate, MKCoordinateSpanMake(0.01, 0.01)), animated: true)
+        mapView.setRegion(MKCoordinateRegionMake(userLocation.coordinate, MKCoordinateSpanMake(0.05, 0.05)), animated: true)
     }
-    
-//    func mapView(mapView: MKMapView, didSelectAnnotationView view: MKAnnotationView) {
-//        if let pin = view as? MKPinAnnotationView {
-//            print ("Changing color")
-//            pin.pinTintColor = UIColor.greenColor()
-//            pin.selected = false
-//        }
-//    }
     
     func dataIsDownloading() -> Bool {
         
@@ -251,16 +227,33 @@ class FindPhotosViewController: UIViewController, UICollectionViewDataSource, UI
         return results.count
     }
     
+    func addAnnotationToMapAtCoordinate(latitude latitude: Double, longitude: Double){
+        mapView.removeAnnotations(mapView.annotations)
+        
+        let pin = MKPointAnnotation()
+        pin.coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        mapView.addAnnotation(pin)
+        print ("Added annotation to map")
+        mapView.setNeedsDisplay()
+        
+    }
+    
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("FlickrPhotoCell", forIndexPath: indexPath)
         
         let results = realm.objects(FlickrPhoto.self)
         
-        if let photoData = results[indexPath.item].photo {
+        if let photoData = results[indexPath.item].photo,
+            let latitude = results[indexPath.item].latitude.value,
+            let longitude = results[indexPath.item].longitude.value {
             let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: cell.bounds.width, height: cell.bounds.height))
             imageView.image = UIImage(data: photoData)
             imageView.contentMode = .ScaleAspectFill
             cell.backgroundView = imageView
+            
+            
+            addAnnotationToMapAtCoordinate(latitude: latitude, longitude: longitude)
+            
         } else {
             let activityView = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: cell.bounds.width, height: cell.bounds.height))
             activityView.startAnimating()
