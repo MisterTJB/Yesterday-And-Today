@@ -19,9 +19,6 @@ class ReshootLibraryCollectionViewController: UICollectionViewController, UIColl
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
         // Register cell classes
         self.collectionView!.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
         
@@ -29,10 +26,16 @@ class ReshootLibraryCollectionViewController: UICollectionViewController, UIColl
         collectionView?.delegate = self
         
         toggleFeedback()
-
-        // Do any additional setup after loading the view.
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        toggleFeedback()
+    }
+    
+    /**
+     If the user's library is empty, display an appropriate message
+     */
     func toggleFeedback(){
         if (realm.objects(ReshootPhoto.self).count == 0) {
             feedbackLabel.text = "Your album is empty"
@@ -42,46 +45,20 @@ class ReshootLibraryCollectionViewController: UICollectionViewController, UIColl
         }
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        toggleFeedback()
-    }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
-    }
-    */
-
     // MARK: UICollectionViewDataSource
 
     override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 1    }
-
+        return 1
+    }
 
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of items
         return realm.objects(ReshootPhoto.self).count
     }
 
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath)
-//        let image = realm.objects(ReshootPhoto.self)[indexPath.item]
-//        let uiImageView = UIImageView(image: UIImage(data: image.photo!)!)
-//        cell.contentView = uiImageView
-    
-        // Configure the cell
         
+        // Ensure that collection view shows the most recent addition to the library firest
         let lastIndex = realm.objects(ReshootPhoto.self).count - 1
         if let data = realm.objects(ReshootPhoto.self)[lastIndex - indexPath.item].photo {
             if let image = UIImage(data: data) {
@@ -95,50 +72,22 @@ class ReshootLibraryCollectionViewController: UICollectionViewController, UIColl
         return cell
     }
     
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        
-        return CGSize(width: (collectionView.frame.width - 20 ) / 2.0, height: collectionView.frame.height / 2.0 )
-    }
-    
-
-    // MARK: UICollectionViewDelegate
-
-    /*
-    // Uncomment this method to specify if the specified item should be highlighted during tracking
-    override func collectionView(collectionView: UICollectionView, shouldHighlightItemAtIndexPath indexPath: NSIndexPath) -> Bool {
-        return true
-    }
-    */
-
-    /*
-    // Uncomment this method to specify if the specified item should be selected
-    override func collectionView(collectionView: UICollectionView, shouldSelectItemAtIndexPath indexPath: NSIndexPath) -> Bool {
-        return true
-    }
-    */
-
-    /*
-    // Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
-    override func collectionView(collectionView: UICollectionView, shouldShowMenuForItemAtIndexPath indexPath: NSIndexPath) -> Bool {
-        return false
-    }
-
-    override func collectionView(collectionView: UICollectionView, canPerformAction action: Selector, forItemAtIndexPath indexPath: NSIndexPath, withSender sender: AnyObject?) -> Bool {
-        return false
-    }
-
-    override func collectionView(collectionView: UICollectionView, performAction action: Selector, forItemAtIndexPath indexPath: NSIndexPath, withSender sender: AnyObject?) {
-    
-    }
-    */
-    
     override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        
+        // If the user taps on an image, show it in a ViewImageViewController modal
         let viewImageViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("ViewImage") as! ViewImageViewController
         let lastIndex = realm.objects(ReshootPhoto.self).count - 1
         viewImageViewController.imageIndex = lastIndex - indexPath.item
         presentViewController(viewImageViewController, animated: true) {
+            // The user may have deleted the image via the modal; data should be reloaded
             collectionView.reloadData()
         }
+    }
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+        
+        // Enforce an (n x 2) grid of images
+        return CGSize(width: (collectionView.frame.width - 20 ) / 2.0, height: collectionView.frame.height / 2.0 )
     }
 
 }
