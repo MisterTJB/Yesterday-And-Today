@@ -35,7 +35,6 @@ class ViewImageViewController: UIViewController {
      Manages left- and right-swiping between images
      */
     @IBAction func swipedImage(sender: UISwipeGestureRecognizer) {
-        print ("Trying to swipe")
         if (sender.direction == UISwipeGestureRecognizerDirection.Left) {
             imageIndex = max(0, imageIndex! - 1)
             updateImageView()
@@ -60,7 +59,6 @@ class ViewImageViewController: UIViewController {
     }
     
     @IBAction func close(sender: AnyObject) {
-        print ("Trying to dimiss")
         dismissViewControllerAnimated(true, completion: nil)
     }
 
