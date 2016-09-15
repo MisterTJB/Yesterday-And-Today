@@ -18,10 +18,11 @@ class ViewImageViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         updateImageView()
-        
-        // Do any additional setup after loading the view.
     }
     
+    /**
+     Load the relevant image data in to the image view
+     */
     func updateImageView(){
         let imageData = realm.objects(ReshootPhoto.self)[imageIndex!].photo
         let image = UIImage(data: imageData!)
@@ -30,7 +31,9 @@ class ViewImageViewController: UIViewController {
     }
     
     
-    
+    /**
+     Manages left- and right-swiping between images
+     */
     @IBAction func swipedImage(sender: UISwipeGestureRecognizer) {
         print ("Trying to swipe")
         if (sender.direction == UISwipeGestureRecognizerDirection.Left) {
@@ -41,12 +44,6 @@ class ViewImageViewController: UIViewController {
             updateImageView()
         }
     }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
 
     @IBAction func deleteImage(sender: AnyObject) {
         
@@ -66,14 +63,5 @@ class ViewImageViewController: UIViewController {
         print ("Trying to dimiss")
         dismissViewControllerAnimated(true, completion: nil)
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
