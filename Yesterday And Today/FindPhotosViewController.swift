@@ -125,17 +125,25 @@ class FindPhotosViewController: UIViewController, UICollectionViewDataSource, UI
     }
     
     func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
+        feedbackLabel.text = "Search is disabled until your location can be determined"
+        
+        searchButton.enabled = false
         print ("Couldn't get location")
-        print (error)
     }
     
+    
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        userLatitude = (locations.last?.coordinate.latitude)!
-        userLongitude = (locations.last?.coordinate.longitude)!
+        print ("updated location")
     }
     
     func mapView(mapView: MKMapView, didUpdateUserLocation userLocation: MKUserLocation) {
         mapView.setRegion(MKCoordinateRegionMake(userLocation.coordinate, MKCoordinateSpanMake(0.05, 0.05)), animated: true)
+        userLatitude = (userLocation.coordinate.latitude)
+        userLongitude = (userLocation.coordinate.longitude)
+        print ("Got location")
+        
+        searchButton.enabled = true
+        feedbackLabel.text = "Let's find some photos!"
     }
     
     func dataIsDownloading() -> Bool {
