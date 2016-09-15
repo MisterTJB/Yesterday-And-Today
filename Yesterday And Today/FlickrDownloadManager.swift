@@ -12,6 +12,7 @@ import RealmSwift
 class FlickrDownloadManager: NSObject {
     
     
+    
     static func downloadImagesFromFlickrWithParametersAndPersist(parameters: [String: String], completion: (NSError?) -> ()) {
         
         var _parameters = parameters
@@ -70,29 +71,48 @@ class FlickrDownloadManager: NSObject {
                     }
                 }
                 
-                for flickrResult in realm.objects(FlickrPhoto.self) {
-                    downloadImageDataForPhoto(flickrResult){ data, error in
-                        
-                        if let error = error {
-                            completion(error)
-                        }
-                        else {
-                            
-                            try! realm.write {
-                                flickrResult.photo = data!
-                                
-                            }
-                            
+                downloadImageDataForPhotos(){ error in
+                    completion(error)
+                }
+                
+            
 
-                            
-                        }
-                        
+        }
+    
+    }
+    
+    private static func downloadImageDataForPhotos(completion: (NSError?) -> Void) {
+        
+        let realm = try! Realm()
+        
+        var count = realm.objects(FlickrPhoto.self).count
+        var allPhotosDownloadedSuccessfully = true
+        for flickrResult in realm.objects(FlickrPhoto.self) {
+            downloadImageDataForPhoto(flickrResult){ data, error in
+                
+                if let _ = error {
+                    allPhotosDownloadedSuccessfully = false
+                }
+                else {
+                    
+                    try! realm.write {
+                        flickrResult.photo = data!
                         
                     }
-                    
                 }
-                completion(nil)
-
+                
+                
+            
+                count -= 1
+                if count == 0 {
+                    if allPhotosDownloadedSuccessfully {
+                        completion(nil)
+                    } else {
+                        completion(NSError(domain: "downloadImageDataForPhotos", code: 0, userInfo: nil))
+                    }
+                }
+            }
+            
         }
     
     }

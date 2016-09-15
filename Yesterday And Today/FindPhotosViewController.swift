@@ -155,6 +155,17 @@ class FindPhotosViewController: UIViewController, UICollectionViewDataSource, UI
         return retVal
     }
     
+    func deleteUnavailableImages(){
+        for result in realm.objects(FlickrPhoto.self) {
+            if result.photo == nil {
+                try! realm.write {
+                    realm.delete(result)
+                }
+                
+            }
+        }
+    }
+    
     func toggleSearchButton(){
         
         if dataIsDownloading(){
@@ -202,16 +213,31 @@ class FindPhotosViewController: UIViewController, UICollectionViewDataSource, UI
         feedbackLabel.hidden = false
         FlickrDownloadManager.downloadImagesFromFlickrWithParametersAndPersist(parameters) { error in
             
+            
             if let error = error {
-                let alertVC = UIAlertController(title: "Network Error", message: "Something went wrong! Check your network availability and try again", preferredStyle: UIAlertControllerStyle.Alert)
-                let dismiss = UIAlertAction(title: "OK", style: UIAlertActionStyle.Cancel) { alertAction in
-                    self.feedbackLabel.text = "Let's find some photos!"
-                    self.feedbackLabel.hidden = false
-                    self.searchButton.enabled = true
-                }
-                alertVC.addAction(dismiss)
-                self.presentViewController(alertVC, animated: true, completion: nil)
                 
+                if (error.domain == "downloadImageDataForPhotos"){
+                    let alertVC = UIAlertController(title: "Network Error", message: "Some photos couldn't be downloaded. You may like to search again", preferredStyle: UIAlertControllerStyle.Alert)
+                    let dismiss = UIAlertAction(title: "OK", style: UIAlertActionStyle.Cancel) { alertAction in
+                        self.searchButton.enabled = true
+                    }
+                    alertVC.addAction(dismiss)
+                    self.presentViewController(alertVC, animated: true) {
+                        self.deleteUnavailableImages()
+                    }
+                
+                
+                } else {
+                    let alertVC = UIAlertController(title: "Network Error", message: "Something went wrong! Check your network availability and try again", preferredStyle: UIAlertControllerStyle.Alert)
+                    let dismiss = UIAlertAction(title: "OK", style: UIAlertActionStyle.Cancel) { alertAction in
+                        self.feedbackLabel.text = "Let's find some photos!"
+                        self.feedbackLabel.hidden = false
+                        self.searchButton.enabled = true
+                    }
+                    alertVC.addAction(dismiss)
+                    self.presentViewController(alertVC, animated: true, completion: nil)
+                }
+            
             } else {
             
                 if self.realm.objects(FlickrPhoto.self).count == 0 {
@@ -238,8 +264,6 @@ class FindPhotosViewController: UIViewController, UICollectionViewDataSource, UI
         let pin = MKPointAnnotation()
         pin.coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
         mapView.addAnnotation(pin)
-        print ("Added annotation to map")
-        mapView.setNeedsDisplay()
         
     }
     
@@ -265,9 +289,6 @@ class FindPhotosViewController: UIViewController, UICollectionViewDataSource, UI
             imageView.image = UIImage(data: photoData)
             imageView.contentMode = .ScaleAspectFill
             cell.backgroundView = imageView
-            
-            
-            
             
         } else {
             let activityView = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: cell.bounds.width, height: cell.bounds.height))
