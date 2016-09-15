@@ -246,21 +246,31 @@ class FindPhotosViewController: UIViewController, UICollectionViewDataSource, UI
         
     }
     
+    func collectionView(collectionView: UICollectionView, willDisplayCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath) {
+        
+        let results = realm.objects(FlickrPhoto.self)
+        if let latitude = results[indexPath.item].latitude.value,
+            let longitude = results[indexPath.item].longitude.value {
+            addAnnotationToMapAtCoordinate(latitude: latitude, longitude: longitude)
+        }
+        
+        
+        
+    }
+    
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("FlickrPhotoCell", forIndexPath: indexPath)
         
         let results = realm.objects(FlickrPhoto.self)
         
-        if let photoData = results[indexPath.item].photo,
-            let latitude = results[indexPath.item].latitude.value,
-            let longitude = results[indexPath.item].longitude.value {
+        if let photoData = results[indexPath.item].photo {
             let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: cell.bounds.width, height: cell.bounds.height))
             imageView.image = UIImage(data: photoData)
             imageView.contentMode = .ScaleAspectFill
             cell.backgroundView = imageView
             
             
-            addAnnotationToMapAtCoordinate(latitude: latitude, longitude: longitude)
+            
             
         } else {
             let activityView = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: cell.bounds.width, height: cell.bounds.height))
