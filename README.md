@@ -39,7 +39,7 @@ Naturally, the app must be run on a device with a rear-facing camera (though it 
 3. The shutter button appeared! Point at something and take a photo...
 4. Now reject that photo by hitting the X button and try again
 5. This time, press the tick button and segue to the library view -- your past/present photo awaits you
-6. Tap that image to view it in fullscreen, share it, or delete it
+6. Tap that image to view it in fullscreen, share it, or delete it -- for now, hit Done
 7. Now go back to the very first screen and hit the Flickr button
 8. Choose a reasonable date range (pretty sure there won't be any photos near your from 1825, but Flickr allows it), and a suitable radius, then press search
 9. Some images should load (or you may be warned that there were no results, or you might be alerted to the fact that your network connection was unavailable, depending on the circumstances). Look through the images and note that a pin appears on the map to show you the approximate location at which a given image was taken
