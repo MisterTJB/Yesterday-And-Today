@@ -33,43 +33,46 @@ class ImageCaptureViewController: UIViewController, UIImagePickerControllerDeleg
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBarHidden = true
-        pastImage.contentMode = .ScaleAspectFill
+        
+        // Register for notifications about application state
+        notificationCenter.addObserver(self, selector:#selector(ImageCaptureViewController.applicationWillResignActiveNotification), name:UIApplicationWillResignActiveNotification, object:nil)
+        notificationCenter.addObserver(self, selector:#selector(ImageCaptureViewController.applicationDidBecomeActiveNotification), name:UIApplicationDidBecomeActiveNotification, object:nil)
+        
+        // Prepare the scrollable pastImage window
         scrollView.delegate = self
-        
-        notificationCenter.addObserver(self,
-                                       selector:#selector(ImageCaptureViewController.applicationWillResignActiveNotification),
-                                       name:UIApplicationWillResignActiveNotification,
-                                       object:nil)
-        
-        notificationCenter.addObserver(self,
-                                       selector:#selector(ImageCaptureViewController.applicationDidBecomeActiveNotification),
-                                       name:UIApplicationDidBecomeActiveNotification,
-                                       object:nil)
-
         scrollView.minimumZoomScale = 1.0
         scrollView.maximumZoomScale = 3.0
+        pastImage.contentMode = .ScaleAspectFill
         
         startCamera()
     }
     
     deinit {
-        
-        notificationCenter.removeObserver(self,
-                                          name:UIApplicationDidBecomeActiveNotification,
-                                          object:nil)
-        notificationCenter.removeObserver(self,
-                                          name:UIApplicationWillResignActiveNotification,
-                                          object:nil)
+        // Deregister for notifications about application state
+        notificationCenter.removeObserver(self, name:UIApplicationDidBecomeActiveNotification, object:nil)
+        notificationCenter.removeObserver(self, name:UIApplicationWillResignActiveNotification, object:nil)
     }
     
+    /**
+     Selector to call when UIApplicationWillResignActive fires
+     */
     func applicationWillResignActiveNotification(){
         stopWobble()
+        toggleShootButton()
     }
     
+    /**
+     Selector to call when UIApplicationDidBecomeActive fires
+     */
     func applicationDidBecomeActiveNotification(){
         toggleWobble()
+        toggleShootButton()
     }
     
+    
+    /**
+     Toggle the animation state for wobbling buttons. If no image is present in pastImage UIImageView, then wobbling will commence; otherwise, wobbling will stop
+     */
     func toggleWobble(){
         if let _ = pastImage.image {
             shootButton.hidden = false
@@ -80,8 +83,24 @@ class ImageCaptureViewController: UIViewController, UIImagePickerControllerDeleg
         }
     }
     
+    /**
+     Toggle the visibility of the image capture button. If an image is present in pastImage UIImageView, then the button is visible; otherwise, it is not
+     */
+    func toggleShootButton(){
+        if let _ = pastImage.image {
+            shootButton.hidden = false
+        } else {
+            shootButton.hidden = true
+        }
+    
+    }
+    
+    /**
+     Stops the animation on the chooseFromLibrary and searchFlickr buttons
+     */
     func stopWobble(){
         
+        // Reset the button transform
         let animation = {
             self.chooseFromLibrary.transform = CGAffineTransformIdentity
             self.searchFlickr.transform = CGAffineTransformIdentity
@@ -90,14 +109,23 @@ class ImageCaptureViewController: UIViewController, UIImagePickerControllerDeleg
         UIView.animateWithDuration(0.1, delay: 0.0, options: [UIViewAnimationOptions.AllowUserInteraction, UIViewAnimationOptions.Repeat, UIViewAnimationOptions.Autoreverse], animations: animation, completion: nil)
     }
     
+    /**
+     Starts the animation on the chooseFromLibrary and searchFlickr buttons
+     */
     func startWobble() {
-    chooseFromLibrary.transform = CGAffineTransformRotate(CGAffineTransformIdentity, (-5 * 3.141) / 180.0)
-    searchFlickr.transform = CGAffineTransformRotate(CGAffineTransformIdentity, (5 * 3.141) / 180.0)
-    
-        let animation = {self.chooseFromLibrary.transform = CGAffineTransformRotate(CGAffineTransformIdentity, (5 * 3.141) / 180.0)
+        
+        // Initialise the chooseLibraryButton at 5 radians to the left, and the searchFlickr button at 5 radians to the right
+        chooseFromLibrary.transform = CGAffineTransformRotate(CGAffineTransformIdentity, (-5 * 3.141) / 180.0)
+        searchFlickr.transform = CGAffineTransformRotate(CGAffineTransformIdentity, (5 * 3.141) / 180.0)
+        
+        // Now move the button transforms to the opposite position
+        let animation = {
+            self.chooseFromLibrary.transform = CGAffineTransformRotate(CGAffineTransformIdentity, (5 * 3.141) / 180.0)
             self.searchFlickr.transform = CGAffineTransformRotate(CGAffineTransformIdentity, (-5 * 3.141) / 180.0)
-}
-    UIView.animateWithDuration(0.1, delay: 0.0, options: [UIViewAnimationOptions.AllowUserInteraction, UIViewAnimationOptions.Repeat, UIViewAnimationOptions.Autoreverse], animations: animation, completion: nil)
+        }
+        
+        // Animate the transition between the two transforms such that they move from side-to-size ten times per second
+        UIView.animateWithDuration(0.1, delay: 0.0, options: [UIViewAnimationOptions.AllowUserInteraction, UIViewAnimationOptions.Repeat, UIViewAnimationOptions.Autoreverse], animations: animation, completion: nil)
     }
     
     
@@ -105,18 +133,21 @@ class ImageCaptureViewController: UIViewController, UIImagePickerControllerDeleg
         super.viewWillAppear(animated)
         navigationController?.navigationBarHidden = true
         toggleWobble()
-        print ("View is appearing")
+        toggleShootButton()
         
     }
     
     
+    /**
+     Initialise a capture session for the rear camera and present the camera input in the cameraView
+     */
     func startCamera(){
+        
         // Get back camera
         let devices = AVCaptureDevice.devices().filter {
             $0.hasMediaType(AVMediaTypeVideo) && $0.position == AVCaptureDevicePosition.Back
         }
         if let captureDevice = devices.first as? AVCaptureDevice {
-            
             do {
                 try captureSession.addInput(AVCaptureDeviceInput(device: captureDevice))
             } catch {
@@ -125,35 +156,32 @@ class ImageCaptureViewController: UIViewController, UIImagePickerControllerDeleg
         }
         
         
+        // Add an output to the capture session
         stillImageOutput.outputSettings = [AVVideoCodecKey : AVVideoCodecJPEG]
         captureSession.addOutput(stillImageOutput)
         
+        // Present the camera's input in the previewLayer
         tempImageView.hidden = true
         let previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
         previewLayer?.frame = view.bounds
         previewLayer?.videoGravity = AVLayerVideoGravityResizeAspect
-        //previewLayer?.connection.videoOrientation = AVCaptureVideoOrientation.Portrait
         cameraView.layer.addSublayer(previewLayer!)
+        
         captureSession.startRunning()
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
 
     @IBAction func showImagePicker(sender: UIButton) {
         getImageFromImagePicker()
     }
     
+    /**
+     Create an image from the two half-images on screen, write to the persistent data store, and present the library view
+     */
     @IBAction func saveImage(sender: UIButton) {
-        hideOnScreenElements()
-        UIGraphicsBeginImageContextWithOptions(self.view.frame.size, true, 0)
-        view.layer.renderInContext(UIGraphicsGetCurrentContext()!)
-        let image = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        showPreCaptureElements()
         
+        let image = createScreenshotImage()
+        
+        // Create a ReshootPhoto object and 
         let realm = try! Realm()
         try! realm.write {
             let reshoot = ReshootPhoto()
@@ -161,31 +189,55 @@ class ImageCaptureViewController: UIViewController, UIImagePickerControllerDeleg
             realm.add(reshoot)
         }
         
-        
-        
-        
+        // Present the library view
         let reshootLibraryViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("ImageLibrary") as! ReshootLibraryCollectionViewController
         navigationController?.pushViewController(reshootLibraryViewController, animated: true)
+        
+        // Prepare the capture view for the next capture session
         pastImage.image = nil
         showPreCaptureElements()
         self.cameraView.hidden = false
         self.tempImageView.hidden = true
     }
     
+    /**
+     Remove extraneous UI elements and take a screenshot of the relevant onscreen content
+     
+     - Returns: UIImage representing the screenshot
+     */
+    func createScreenshotImage() -> UIImage {
+        hideOnScreenElements()
+        UIGraphicsBeginImageContextWithOptions(self.view.frame.size, true, 0)
+        view.layer.renderInContext(UIGraphicsGetCurrentContext()!)
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        showPreCaptureElements()
+        return image
+    
+    }
+    
+    
+    /**
+     Present a UIImagePicker to the user
+     */
     func getImageFromImagePicker(){
         let imagePickerController = UIImagePickerController()
         imagePickerController.delegate = self
-        presentViewController(imagePickerController, animated: true){
-            print("Stuff giot picked")
-        }
+        presentViewController(imagePickerController, animated: true, completion: nil)
     }
     
+    /**
+     Iterate through the elements in the interfaceButtons outlet collection and hide them
+     */
     func hideOnScreenElements(){
         interfaceButtons.forEach {
             $0.hidden = true
         }
     }
     
+    /**
+     Iterate through the elements in the preCaptureButtons outlet collection and show them, hiding all others
+     */
     func showPreCaptureElements(){
         hideOnScreenElements()
         preCaptureButtons.forEach {
@@ -194,6 +246,9 @@ class ImageCaptureViewController: UIViewController, UIImagePickerControllerDeleg
         
     }
     
+    /**
+     Iterate through the elements in the postCaptureButtons outlet collection and show them, hiding all others
+     */
     func showPostCaptureElements(){
         hideOnScreenElements()
         postCaptureButtons.forEach {
@@ -201,26 +256,32 @@ class ImageCaptureViewController: UIViewController, UIImagePickerControllerDeleg
         }
     }
     
+    
     @IBAction func captureImage(sender: UIButton){
         didPressTakePhoto()
         showPostCaptureElements()
     }
     
     
+    /**
+     Capture a still image from the input to the camera
+     */
     func didPressTakePhoto(){
         
         if let videoConnection = stillImageOutput.connectionWithMediaType(AVMediaTypeVideo){
             videoConnection.videoOrientation = AVCaptureVideoOrientation.Portrait
             stillImageOutput.captureStillImageAsynchronouslyFromConnection(videoConnection) { sampleBuffer, error in
                 
-                if sampleBuffer != nil {
+                if let sampleBuffer = sampleBuffer {
                     
                     
+                    // Create an image by cropping to the currently visible data
                     let imageData = AVCaptureStillImageOutput.jpegStillImageNSDataRepresentation(sampleBuffer)
                     let dataProvider  = CGDataProviderCreateWithCFData(imageData)
                     let cgImageRef = CGImageCreateWithJPEGDataProvider(dataProvider, nil, true, .RenderingIntentDefault)
-                    
                     let image = UIImage(CGImage: cgImageRef!, scale: 1.0, orientation: UIImageOrientation.Right)
+                    
+                    // Hide irrelevant interface elements and present the image data
                     self.cameraView.hidden = true
                     self.tempImageView.image = image
                     self.tempImageView.hidden = false
@@ -247,19 +308,20 @@ class ImageCaptureViewController: UIViewController, UIImagePickerControllerDeleg
     func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?) {
         pastImage.image = image
         self.stopWobble()
-        print (image.size)
-        picker.dismissViewControllerAnimated(true) {
-            print ("Completed")
-        }
+        picker.dismissViewControllerAnimated(true, completion: nil)
     }
     
     func viewForZoomingInScrollView(scrollView: UIScrollView) -> UIView? {
         return pastImage
     }
     
+    /**
+     Delegate method for passing image from the Flickr image chooser to this view
+     */
     func displaySelectedImage(data: UIImage) {
         pastImage.image = data
         toggleWobble()
+        toggleShootButton()
     }
     
 }
