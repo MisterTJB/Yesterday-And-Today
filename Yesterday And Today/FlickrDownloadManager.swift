@@ -77,6 +77,8 @@ class FlickrDownloadManager: NSObject {
                         print ("Error unwrapping Flickr results")
                     }
                 }
+                completion(nil)
+                
                 
                 // Now download images data for the skeletal photos
                 downloadImageDataForPhotos(){ error in
