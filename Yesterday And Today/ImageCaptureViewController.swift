@@ -10,23 +10,28 @@ import UIKit
 import AVFoundation
 import RealmSwift
 
-class ImageCaptureViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIScrollViewDelegate, PassBackImageDelegate {
+class ImageCaptureViewController: UIViewController, UIScrollViewDelegate, PassBackImageDelegate {
 
+    // Subviews
     @IBOutlet weak var pastImage: UIImageView!
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var cameraView: UIView!
-    
     @IBOutlet weak var tempImageView: UIImageView!
+    
+    
+    // Buttons
     @IBOutlet weak var shootButton: UIButton!
-    let captureSession = AVCaptureSession()
-    let stillImageOutput = AVCaptureStillImageOutput()
-    
-    @IBOutlet var interfaceButtons: [UIButton]!
-    @IBOutlet var preCaptureButtons: [UIButton]!
-    @IBOutlet var postCaptureButtons: [UIButton]!
-    
     @IBOutlet var chooseFromLibrary: UIButton!
     @IBOutlet var searchFlickr: UIButton!
+    
+    // Button collections
+    @IBOutlet var preCaptureButtons: [UIButton]!
+    @IBOutlet var postCaptureButtons: [UIButton]!
+    @IBOutlet var interfaceButtons: [UIButton]!
+    
+    // Camera properties
+    let captureSession = AVCaptureSession()
+    let stillImageOutput = AVCaptureStillImageOutput()
     
     let notificationCenter = NSNotificationCenter.defaultCenter()
     
@@ -200,6 +205,18 @@ class ImageCaptureViewController: UIViewController, UIImagePickerControllerDeleg
         self.tempImageView.hidden = true
     }
     
+    @IBAction func restartCameraSession(sender: UIButton) {
+        showPreCaptureElements()
+        self.cameraView.hidden = false
+        self.tempImageView.hidden = true
+        
+    }
+    @IBAction func segueToImageSearch(sender: UIButton) {
+        let findPhotosVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("FlickrSearchModal") as! FindPhotosViewController
+        findPhotosVC.delegate = self
+        presentViewController(findPhotosVC, animated: true, completion: nil)
+    }
+    
     /**
      Remove extraneous UI elements and take a screenshot of the relevant onscreen content
      
@@ -213,18 +230,9 @@ class ImageCaptureViewController: UIViewController, UIImagePickerControllerDeleg
         UIGraphicsEndImageContext()
         showPreCaptureElements()
         return image
-    
+        
     }
     
-    
-    /**
-     Present a UIImagePicker to the user
-     */
-    func getImageFromImagePicker(){
-        let imagePickerController = UIImagePickerController()
-        imagePickerController.delegate = self
-        presentViewController(imagePickerController, animated: true, completion: nil)
-    }
     
     /**
      Iterate through the elements in the interfaceButtons outlet collection and hide them
@@ -293,23 +301,7 @@ class ImageCaptureViewController: UIViewController, UIImagePickerControllerDeleg
         }
     }
     
-    @IBAction func restartCameraSession(sender: UIButton) {
-        showPreCaptureElements()
-        self.cameraView.hidden = false
-        self.tempImageView.hidden = true
-        
-    }
-    @IBAction func segueToImageSearch(sender: UIButton) {
-        let findPhotosVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("FlickrSearchModal") as! FindPhotosViewController
-        findPhotosVC.delegate = self
-        presentViewController(findPhotosVC, animated: true, completion: nil)
-    }
     
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?) {
-        pastImage.image = image
-        self.stopWobble()
-        picker.dismissViewControllerAnimated(true, completion: nil)
-    }
     
     func viewForZoomingInScrollView(scrollView: UIScrollView) -> UIView? {
         return pastImage
@@ -322,6 +314,28 @@ class ImageCaptureViewController: UIViewController, UIImagePickerControllerDeleg
         pastImage.image = data
         toggleWobble()
         toggleShootButton()
+    }
+    
+}
+
+
+// MARK: Delegate methods for managing image picker
+
+extension ImageCaptureViewController: UINavigationControllerDelegate, UIImagePickerControllerDelegate {
+    
+    /**
+     Present a UIImagePicker to the user
+     */
+    func getImageFromImagePicker(){
+        let imagePickerController = UIImagePickerController()
+        imagePickerController.delegate = self
+        presentViewController(imagePickerController, animated: true, completion: nil)
+    }
+    
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?) {
+        pastImage.image = image
+        self.stopWobble()
+        picker.dismissViewControllerAnimated(true, completion: nil)
     }
     
 }
