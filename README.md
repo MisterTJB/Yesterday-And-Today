@@ -8,7 +8,7 @@ Yesterday and Today is an app that aids in creating (very basic!) 'past and pres
 
 Users are able to source an image from their photo library, or find a nearby photo on Flickr. (To clue the user in to how to progress, the relevant buttons are animated.)
 
-Selecting a photo from their library is handled by a UIImagePicker, and thus replicates the typical iOS user experience for selecting one's own content.
+Selecting a 'past' photo from the user's library is handled by a UIImagePicker, and thus replicates the typical iOS user experience for selecting one's own content.
 
 If a user chooses to search Flickr, they are presented with a view controller to manage the search process. Here, they are able to use a UIPicker to narrow the date range of their search, and a UISlider to limit the radius of the search. Results are shown in a collection view, and the map is updated with a pin to show the location of a given image on the map so that they can hunt down the location at which the image was taken.
 
