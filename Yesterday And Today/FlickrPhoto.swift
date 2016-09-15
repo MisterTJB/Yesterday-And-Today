@@ -13,7 +13,6 @@ class FlickrPhoto: Object {
     dynamic var url: String?
     dynamic var photo: NSData?
     var date: NSDate?
-    var downloadError: Bool? = false
     let latitude = RealmOptional<Double>()
     let longitude = RealmOptional<Double>()
 
