@@ -171,7 +171,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x1o-dW-jJM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1198" y="33"/>
+            <point key="canvasLocation" x="1206" y="33"/>
         </scene>
         <!--View Image View Controller-->
         <scene sceneID="IPd-5O-kFe">
@@ -258,7 +258,7 @@
                     </connections>
                 </swipeGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="1857" y="-11"/>
+            <point key="canvasLocation" x="1992" y="33"/>
         </scene>
         <!--ImageCaptureView-->
         <scene sceneID="Gei-rM-qww">
@@ -465,7 +465,7 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HmL-Hl-Zn9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1886" y="706"/>
+            <point key="canvasLocation" x="1992" y="681.75"/>
         </scene>
     </scenes>
     <resources>
