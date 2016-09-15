@@ -205,12 +205,9 @@ class FindPhotosViewController: UIViewController, UICollectionViewDataSource, UI
             if let error = error {
                 let alertVC = UIAlertController(title: "Network Error", message: "Something went wrong! Check your network availability and try again", preferredStyle: UIAlertControllerStyle.Alert)
                 let dismiss = UIAlertAction(title: "OK", style: UIAlertActionStyle.Cancel) { alertAction in
-                    try! self.realm.write {
-                        self.realm.delete(self.realm.objects(FlickrPhoto.self))
-                    }
-                    self.searchResultsCollection.reloadData()
                     self.feedbackLabel.text = "Let's find some photos!"
                     self.feedbackLabel.hidden = false
+                    self.searchButton.enabled = true
                 }
                 alertVC.addAction(dismiss)
                 self.presentViewController(alertVC, animated: true, completion: nil)
